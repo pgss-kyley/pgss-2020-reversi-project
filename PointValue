@@ -1,0 +1,88 @@
+public ArrayList<int[]> pointvalue(int[][] board) { //returns best move for a given board of ints. For example,it might return 
+		//point values for each region
+    	//CHANGEABLE, MAYBE TEST IT OUT
+		final int R5= 10; 
+		final int R3= 5;
+		final int R1= 0; 
+		final int R2= -5;
+		final int R4=-10;
+		
+		//initializing variables
+		ArrayList<int[]> best = new ArrayList<int[]>(); //RETURNs BEST 3 MOVES!!!!! at most	
+		int bestvalue = -100;
+		int secondvalue = -100;
+		int thirdvalue = -100;
+		int pointvalue;
+		int index = 0; 
+		
+		//main code
+		ArrayList<int[]> legalMoves = returnMoves(board);
+		for (int i=0; i<legalMoves.size(); i++) { //the one problem here! that a legalMove could exist at 0,0. because the legalMoves returns a bunch of [0,0]'s
+			int x= legalMoves.get(i)[0];
+			
+			
+			int y= legalMoves.get(i)[1];
+			if ((x==0 && y==0) || (x==0 && y==7) || (x==7 && y==0) || (x==7 && y==7)) {
+				pointvalue = R5;
+			}
+			else if (((x==2 || x==3 || x==4 || x==5)&& (y==0 | y==7)) || ((y==2 || y==3 || y==4 || y==5)&& (x==0 | x==7))) {
+				pointvalue = R3;
+			}
+			else if ((2<=x && x<=5) && (2<=y && y<=5)) {
+				pointvalue = R1;
+			}
+			else if (((x==2 || x==3 || x==4 || x==5)&& (y==1 | y==6)) || ((y==2 || y==3 || y==4 || y==5)&& (x==1 | x==6))) {
+				pointvalue = R2;
+			}
+			else {
+				pointvalue = R4;
+			}
+			
+			
+			if (index == 0 && pointvalue>bestvalue) {
+				bestvalue = pointvalue;
+				best.set(index , new int[]{x,y});
+				index++;
+			}
+			else if (index == 1) {
+				if (pointvalue>bestvalue) {
+					secondvalue = bestvalue;
+					bestvalue = pointvalue;
+					best.set(1, new int[] {best.get(0)[0], best.get(0)[1]});
+					best.set(0 , new int[]{x,y});
+					index++;
+				}
+				else {
+					secondvalue = pointvalue;
+					best.set(1 , new int[]{x,y});
+					index++;
+				}
+			}
+			else {
+				if (pointvalue>bestvalue) {
+					thirdvalue = secondvalue;
+					secondvalue = bestvalue;
+					bestvalue = pointvalue;
+					best.set(2, new int[] {best.get(1)[0], best.get(1)[1]});
+					best.set(1, new int[] {best.get(0)[0], best.get(0)[1]});
+					best.set(0 , new int[]{x,y});
+					index++;
+				}
+				else if (pointvalue>secondvalue) {
+					thirdvalue = secondvalue;
+					secondvalue = pointvalue;
+					best.set(2, new int[] {best.get(1)[0], best.get(1)[1]});
+					best.set(1, new int[] {x,y});
+					index++;
+				}
+				else {
+					if (pointvalue > thirdvalue) {
+						thirdvalue = pointvalue;
+						best.set(2, new int[] {x,y});
+						index++;
+					}
+				}
+			}
+		}
+		return best;	
+    }
