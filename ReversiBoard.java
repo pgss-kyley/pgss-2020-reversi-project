@@ -2,6 +2,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import javax.swing.plaf.metal.MetalButtonUI;
 
 
 /**
@@ -19,6 +20,7 @@ public class ReversiBoard extends javax.swing.JFrame {
     
     public static int[][] arrayBoard = new int[8][8];
     public static JButton[][] boardList = new JButton[8][8];
+    public static volatile boolean userMadeMove = false;
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -185,6 +187,8 @@ public class ReversiBoard extends javax.swing.JFrame {
         resetButton.setBorder(null);
 
         tile_0_0.setBackground(new java.awt.Color(47, 173, 81));
+        //test font color
+        tile_0_0.setForeground(new java.awt.Color(255,255,255));
         tile_0_0.setFont(new java.awt.Font("Arial", 0, 72)); // NOI18N
         tile_0_0.setBorder(null);
         tile_0_0.addActionListener(new java.awt.event.ActionListener() {
@@ -194,7 +198,7 @@ public class ReversiBoard extends javax.swing.JFrame {
         });
 
         tile_0_1.setBackground(new java.awt.Color(47, 173, 81));
-        tile_0_1.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        tile_0_1.setFont(new java.awt.Font("Arial", 0, 72)); // NOI18N
         tile_0_1.setBorder(null);
         tile_0_1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -449,6 +453,7 @@ public class ReversiBoard extends javax.swing.JFrame {
         tile_3_4.setFont(new java.awt.Font("Arial", 0, 72)); // NOI18N
         tile_3_4.setText("●");
         tile_3_4.setBorder(null);
+        tile_3_4.setForeground(new java.awt.Color(0,0,0));
         tile_3_4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tile_3_4ActionPerformed(evt);
@@ -457,8 +462,8 @@ public class ReversiBoard extends javax.swing.JFrame {
 
         tile_3_3.setBackground(new java.awt.Color(47, 173, 81));
         tile_3_3.setFont(new java.awt.Font("Arial", 0, 72)); // NOI18N
-        tile_3_3.setForeground(new java.awt.Color(255, 255, 255));
         tile_3_3.setText("●");
+        tile_3_3.setForeground(new java.awt.Color(255, 255, 255));
         tile_3_3.setAlignmentY(0.0F);
         tile_3_3.setBorder(null);
         tile_3_3.addActionListener(new java.awt.event.ActionListener() {
@@ -525,12 +530,13 @@ public class ReversiBoard extends javax.swing.JFrame {
         tile_4_3.setFont(new java.awt.Font("Arial", 0, 72)); // NOI18N
         tile_4_3.setText("●");
         tile_4_3.setBorder(null);
+        tile_4_3.setForeground(new java.awt.Color(0,0,0));
         tile_4_3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tile_4_3ActionPerformed(evt);
             }
         });
-
+        
         tile_4_7.setBackground(new java.awt.Color(47, 173, 81));
         tile_4_7.setFont(new java.awt.Font("Arial", 0, 72)); // NOI18N
         tile_4_7.setBorder(null);
@@ -550,7 +556,7 @@ public class ReversiBoard extends javax.swing.JFrame {
                 tile_4_4ActionPerformed(evt);
             }
         });
-
+        
         tile_5_0.setBackground(new java.awt.Color(47, 173, 81));
         tile_5_0.setFont(new java.awt.Font("Arial", 0, 72)); // NOI18N
         tile_5_0.setBorder(null);
@@ -624,7 +630,7 @@ public class ReversiBoard extends javax.swing.JFrame {
         });
 
         tile_6_1.setBackground(new java.awt.Color(47, 173, 81));
-        tile_6_1.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        tile_6_1.setFont(new java.awt.Font("Arial", 0, 72)); // NOI18N
         tile_6_1.setBorder(null);
         tile_6_1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1045,282 +1051,373 @@ public class ReversiBoard extends javax.swing.JFrame {
 
     private void tile_0_0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_0_0ActionPerformed
         // TODO add your handling code here:
-        tile_0_0.setText("●");
-        if (tile_0_0.getForeground().getRGB() == -1) {
-            arrayBoard[0][0] = 1;
-        }
-        else {
-            arrayBoard[0][0] = 0;
-        }
-        boardList[0][0] = tile_0_0;
+        updateTile(tile_0_0,0,0);
+        testArrayBoard();
     }//GEN-LAST:event_tile_0_0ActionPerformed
-
     private void tile_0_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_0_1ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_0_1,0,1);
+        testArrayBoard();
     }//GEN-LAST:event_tile_0_1ActionPerformed
-
     private void tile_0_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_0_2ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_0_2,0,2);
+        testArrayBoard();
     }//GEN-LAST:event_tile_0_2ActionPerformed
-
     private void tile_0_3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_0_3ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_0_3,0,3);
+        testArrayBoard();
     }//GEN-LAST:event_tile_0_3ActionPerformed
-
     private void tile_0_4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_0_4ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_0_4,0,4);
+        testArrayBoard();
     }//GEN-LAST:event_tile_0_4ActionPerformed
-
     private void tile_0_5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_0_5ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_0_5,0,5);
+        testArrayBoard();
     }//GEN-LAST:event_tile_0_5ActionPerformed
-
     private void tile_0_6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_0_6ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_0_6,0,6);
+        testArrayBoard();
     }//GEN-LAST:event_tile_0_6ActionPerformed
-
     private void tile_0_7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_0_7ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_0_7,0,7);
+        testArrayBoard();
     }//GEN-LAST:event_tile_0_7ActionPerformed
-
+    
     private void tile_1_0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_1_0ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_1_0,1,0);
+        testArrayBoard();
     }//GEN-LAST:event_tile_1_0ActionPerformed
-
     private void tile_1_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_1_1ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_1_1,1,1);
+        testArrayBoard();
     }//GEN-LAST:event_tile_1_1ActionPerformed
-
     private void tile_1_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_1_2ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_1_2,1,2);
+        testArrayBoard();
     }//GEN-LAST:event_tile_1_2ActionPerformed
-
     private void tile_1_3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_1_3ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_1_3,1,3);
+        testArrayBoard();
     }//GEN-LAST:event_tile_1_3ActionPerformed
-
     private void tile_1_4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_1_4ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_1_4,1,4);
+        testArrayBoard();
     }//GEN-LAST:event_tile_1_4ActionPerformed
-
     private void tile_1_5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_1_5ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_1_5,1,5);
+        testArrayBoard();
     }//GEN-LAST:event_tile_1_5ActionPerformed
-
     private void tile_1_6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_1_6ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_1_6,1,6);
+        testArrayBoard();
     }//GEN-LAST:event_tile_1_6ActionPerformed
-
     private void tile_1_7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_1_7ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_1_7,1,7);
+        testArrayBoard();
     }//GEN-LAST:event_tile_1_7ActionPerformed
-
+    
     private void tile_2_0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_2_0ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_2_0,2,0);
+        testArrayBoard();
     }//GEN-LAST:event_tile_2_0ActionPerformed
-
     private void tile_2_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_2_1ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_2_1,2,1);
+        testArrayBoard();
     }//GEN-LAST:event_tile_2_1ActionPerformed
-
     private void tile_2_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_2_2ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_2_2,2,2);
+        testArrayBoard();
     }//GEN-LAST:event_tile_2_2ActionPerformed
-
     private void tile_2_3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_2_3ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_2_3,2,3);
+        testArrayBoard();
     }//GEN-LAST:event_tile_2_3ActionPerformed
-
     private void tile_2_4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_2_4ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_2_4,2,4);
+        testArrayBoard();
     }//GEN-LAST:event_tile_2_4ActionPerformed
-
     private void tile_2_5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_2_5ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_2_5,2,5);
+        testArrayBoard();
     }//GEN-LAST:event_tile_2_5ActionPerformed
-
     private void tile_2_6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_2_6ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_2_6,2,6);
+        testArrayBoard();
     }//GEN-LAST:event_tile_2_6ActionPerformed
-
     private void tile_2_7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_2_7ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_2_7,2,7);
+        testArrayBoard();
     }//GEN-LAST:event_tile_2_7ActionPerformed
 
     private void tile_3_0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_3_0ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_3_0,3,0);
+        testArrayBoard();
     }//GEN-LAST:event_tile_3_0ActionPerformed
-
     private void tile_3_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_3_1ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_3_1,3,1);
+        testArrayBoard();
     }//GEN-LAST:event_tile_3_1ActionPerformed
-
     private void tile_3_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_3_2ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_3_2,3,2);
+        testArrayBoard();
     }//GEN-LAST:event_tile_3_2ActionPerformed
-
     private void tile_3_3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_3_3ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_3_3,3,3);
+        testArrayBoard();
     }//GEN-LAST:event_tile_3_3ActionPerformed
-
     private void tile_3_4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_3_4ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_3_4,3,4);
+        testArrayBoard();
     }//GEN-LAST:event_tile_3_4ActionPerformed
-
     private void tile_3_5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_3_5ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_3_5,3,5);
+        testArrayBoard();
     }//GEN-LAST:event_tile_3_5ActionPerformed
-
     private void tile_3_6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_3_6ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_3_6,3,6);
+        testArrayBoard();
     }//GEN-LAST:event_tile_3_6ActionPerformed
-
     private void tile_3_7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_3_7ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_3_7,3,7);
+        testArrayBoard();
     }//GEN-LAST:event_tile_3_7ActionPerformed
 
     private void tile_4_0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_4_0ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_4_0,4,0);
+        testArrayBoard();
     }//GEN-LAST:event_tile_4_0ActionPerformed
-
     private void tile_4_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_4_1ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_4_1,4,1);
+        testArrayBoard();
     }//GEN-LAST:event_tile_4_1ActionPerformed
-
     private void tile_4_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_4_2ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_4_2,4,2);
+        testArrayBoard();
     }//GEN-LAST:event_tile_4_2ActionPerformed
-
     private void tile_4_3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_4_3ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_4_3,4,3);
+        testArrayBoard();
     }//GEN-LAST:event_tile_4_3ActionPerformed
-
     private void tile_4_4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_4_4ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_4_4,4,4);
+        testArrayBoard();
     }//GEN-LAST:event_tile_4_4ActionPerformed
-
     private void tile_4_5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_4_5ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_4_5,4,5);
+        testArrayBoard();
     }//GEN-LAST:event_tile_4_5ActionPerformed
-
     private void tile_4_6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_4_6ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_4_6,4,6);
+        testArrayBoard();
     }//GEN-LAST:event_tile_4_6ActionPerformed
-
     private void tile_4_7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_4_7ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_4_7,4,7);
+        testArrayBoard();
     }//GEN-LAST:event_tile_4_7ActionPerformed
-
+    
     private void tile_5_0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_5_0ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_5_0,5,0);
+        testArrayBoard();
     }//GEN-LAST:event_tile_5_0ActionPerformed
-
     private void tile_5_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_5_1ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_5_1,5,1);
+        testArrayBoard();
     }//GEN-LAST:event_tile_5_1ActionPerformed
-
     private void tile_5_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_5_2ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_5_2,5,2);
+        testArrayBoard();
     }//GEN-LAST:event_tile_5_2ActionPerformed
-
     private void tile_5_3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_5_3ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_5_3,5,3);
+        testArrayBoard();
     }//GEN-LAST:event_tile_5_3ActionPerformed
-
     private void tile_5_4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_5_4ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_5_4,5,4);
+        testArrayBoard();
     }//GEN-LAST:event_tile_5_4ActionPerformed
-
     private void tile_5_5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_5_5ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_5_5,5,5);
+        testArrayBoard();
     }//GEN-LAST:event_tile_5_5ActionPerformed
-
     private void tile_5_6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_5_6ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_5_6,5,6);
+        testArrayBoard();
     }//GEN-LAST:event_tile_5_6ActionPerformed
-
     private void tile_5_7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_5_7ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_5_7,5,7);
+        testArrayBoard();
     }//GEN-LAST:event_tile_5_7ActionPerformed
 
     private void tile_6_0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_6_0ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_6_0,6,0);
+        testArrayBoard();
     }//GEN-LAST:event_tile_6_0ActionPerformed
-
     private void tile_6_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_6_1ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_6_1,6,1);
+        testArrayBoard();
     }//GEN-LAST:event_tile_6_1ActionPerformed
-
     private void tile_6_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_6_2ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_6_2,6,2);
+        testArrayBoard();
     }//GEN-LAST:event_tile_6_2ActionPerformed
-
     private void tile_6_3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_6_3ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_6_3,6,3);
+        testArrayBoard();
     }//GEN-LAST:event_tile_6_3ActionPerformed
-
     private void tile_6_4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_6_4ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_6_4,6,4);
+        testArrayBoard();
     }//GEN-LAST:event_tile_6_4ActionPerformed
-
     private void tile_6_5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_6_5ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_6_5,6,5);
+        testArrayBoard();
     }//GEN-LAST:event_tile_6_5ActionPerformed
-
     private void tile_6_6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_6_6ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_6_6,6,6);
+        testArrayBoard();
     }//GEN-LAST:event_tile_6_6ActionPerformed
-
     private void tile_6_7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_6_7ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_6_7,6,7);
+        testArrayBoard();
     }//GEN-LAST:event_tile_6_7ActionPerformed
 
     private void tile_7_0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_7_0ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_7_0,7,0);
+        testArrayBoard();
     }//GEN-LAST:event_tile_7_0ActionPerformed
-
     private void tile_7_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_7_1ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_7_1,7,1);
+        testArrayBoard();
     }//GEN-LAST:event_tile_7_1ActionPerformed
-
     private void tile_7_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_7_2ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_7_2,7,2);
+        testArrayBoard();
     }//GEN-LAST:event_tile_7_2ActionPerformed
-
     private void tile_7_3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_7_3ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_7_3,7,3);
+        testArrayBoard();
     }//GEN-LAST:event_tile_7_3ActionPerformed
-
     private void tile_7_4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_7_4ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_7_4,7,4);
+        testArrayBoard();
     }//GEN-LAST:event_tile_7_4ActionPerformed
-
     private void tile_7_5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_7_5ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_7_5,7,5);
+        testArrayBoard();
     }//GEN-LAST:event_tile_7_5ActionPerformed
-
     private void tile_7_6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_7_6ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_7_6,7,6);
+        testArrayBoard();
     }//GEN-LAST:event_tile_7_6ActionPerformed
-
     private void tile_7_7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_7_7ActionPerformed
         // TODO add your handling code here:
+        updateTile(tile_7_7,7,7);
+        testArrayBoard();
     }//GEN-LAST:event_tile_7_7ActionPerformed
-    
-    private void myInitComponents() {
-        //any necessary adjustments to GUI go here
-        
-    }
     
     /**
      * @param args the command line arguments
      */
     
-    public static void main(String args[]) {
+    //method for all action listeners - updates board and makes move
+    public void updateTile(JButton tile, int x, int y) {
+        ArrayList<int[]> legalMoves = returnMoves(arrayBoard);
+        int [] compareArray = new int[2];
+        int xPos = 0; int yPos = 0;
+        //checks if user's input is actually a legal move, otherwise, do nothing
+        for (int i = 0; i < legalMoves.size(); i++) {
+            compareArray = legalMoves.get(i);
+            xPos = compareArray[0];
+            yPos = compareArray[1];
+            if ((x == xPos) && y == yPos) {
+                tile.setForeground(Color.BLACK); //reverse, will actually play white
+                tile.setText("●");
+                arrayBoard[x][y] = 2;
+                boardList[x][y] = tile;
+                play();
+            }
+        }
+    }
+    //prints arrayboard
+    public void testArrayBoard() {
+        System.out.println("==========");
+        for (int i = 0; i < 8; i++) {
+            for (int k = 0; k < 8; k++) {
+                System.out.print(arrayBoard[i][k]);
+            }
+            System.out.println();
+        }
+        System.out.println("==========");
+    }
+    
+    public static void main(String args[]) throws InterruptedException {
         //GUI Setup
         ReversiBoard guiBoard = new ReversiBoard();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 guiBoard.setVisible(true);
             }
@@ -1330,58 +1427,111 @@ public class ReversiBoard extends javax.swing.JFrame {
         boardList = guiBoard.storeBoard();
         //transfers buttons into array in ReversiBoard class
         arrayBoard = guiBoard.storeToArrayBoard(boardList);
-        boolean notWin = true;
         
         //updates GUI portion using array
         guiBoard.updateBoard(boardList);
         
         
         //all below is testing
-        //intializing numerical board
         
         //test returnMoves
         ArrayList<int[]> legalMoves = new ArrayList<int[]>();
         legalMoves = guiBoard.returnMoves(arrayBoard);
-        guiBoard.showLegal(legalMoves,boardList);
         
-        
-        /*in each actionListener:
-        - setText in boardList object to circle
-        */
-        
-        //template for actionListeners
-        boardList[0][0].setText("●");
+        int[][] reverseBoard = arrayBoard;
+        int[] aiMoveChoice = new int[2];
+        int aiMoveX = 0;
+        int aiMoveY = 0;
+        //first turn display
+        //gets all legal moves for user
+        legalMoves = guiBoard.returnMoves(arrayBoard);
+        //updates GUI to show legal moves
+        guiBoard.showLegal(legalMoves, boardList);
 
-        //!!! NEED A FUNCTION TO SCAN BOARD FROM GUI AND UPDATE boardList AND arrayBoard
-        //flow: button pressed > gui updated > scanner method run > 
-        
-        //test actionListeners
-        for (int i = 0; i < 8; i++) {
-            for (int k = 0; k < 8; k++) {
-                System.out.print(arrayBoard[i][k]);
+        //main code
+        /*
+        while(!guiBoard.checkWin(arrayBoard)) {
+            //gets all legal moves for user
+            legalMoves = guiBoard.returnMoves(arrayBoard);
+            //updates GUI to show legal moves
+            guiBoard.showLegal(legalMoves, boardList);
+            //waits for user to make a move
+            while(!userMadeMove) {
+                guiBoard.wait();
             }
-            System.out.println();
-        }
-        
-        while(notWin) {
-            //flips who moves
-            //after flipping moves, changes the foreground property for all legal moves to be the color of the current player
             
             
-            //checks to see when to stop game: if neither player has legal moves (eg. use legalMove function for both black and white
-            /*
-                if (returnMoves(arrayBoard).isEmpty() && returnMoves(newArrayBoard).isEmpty() {
-                    notWin = false;
-                }
-                ***newArrayBoard is the board when flipped to opponent's end, use Aidan's reverse board function for this
-            */
+            //swaps player
+            reverseBoard = makeReverseBoard(arrayBoard);
+            //returns legal moves for the AI
+            legalMoves = guiBoard.returnMoves(arrayBoard);
+            //AI chooses a move
+            aiMoveChoice = randomChoice(legalMoves);
+            //updates move choice on arrayBoard
+            aiMoveX = aiMoveChoice[0];
+            aiMoveY = aiMoveChoice[1];
+            arrayBoard[aiMoveX][aiMoveY] = 2;
+            //swaps board again to account for previous reverse
+            arrayBoard = makeReverseBoard(arrayBoard);
+            //updates the JButton array to match that of the arrayBoard
+            boardList = guiBoard.storeFromArrayBoard(arrayBoard);
+            //updates the GUI based on new boardList
+            guiBoard.updateBoard(boardList);
+            System.out.println("hello");
+            
+            //swaps board again for the user next turn
+            
         }
+        */
     }
     
+    public void play() {
+        ArrayList<int[]> legalMoves = new ArrayList<int[]>();
+        legalMoves = returnMoves(arrayBoard);
+        
+        int[][] reverseBoard = makeBoardCopy(arrayBoard);
+        int[] aiMoveChoice = new int[2];
+        int aiMoveX = 0;
+        int aiMoveY = 0;
+        
+        //main code
+        if(!checkWin(arrayBoard)) {
+            //gets all legal moves for user
+            legalMoves = returnMoves(arrayBoard);
+            //updates GUI to show legal moves
+            showLegal(legalMoves, boardList);
+            //swaps player
+            reverseBoard = makeReverseBoard(reverseBoard);
+            //returns legal moves for the AI
+            legalMoves = returnMoves(reverseBoard);
+            //AI chooses a move
+            aiMoveChoice = randomChoice(legalMoves);
+            //updates move choice on arrayBoard
+            aiMoveX = aiMoveChoice[0];
+            aiMoveY = aiMoveChoice[1];
+            reverseBoard[aiMoveX][aiMoveY] = 2;
+            //update GUI with AI move
+            boardList[aiMoveX][aiMoveY].setForeground(Color.BLACK);
+            //swaps board again to account for previous reverse
+            arrayBoard = makeReverseBoard(reverseBoard);
+            //updates the JButton array to match that of the arrayBoard
+            boardList = storeFromArrayBoard(arrayBoard); //nullpointer
+            //updates the GUI based on new boardList
+            updateBoard(boardList);
+            
+            //set up for next user turn
+            //gets all legal moves for user
+            legalMoves = returnMoves(arrayBoard);
+            //updates GUI to show legal moves
+            showLegal(legalMoves, boardList);
+            
+        }
+    }
+            
     //GUI functions
     //takes index values and updates them onto board, update GUI
     public void updateBoard(JButton[][] board) {
-        tile_0_0 = board[0][1];
+        tile_0_0 = board[0][0];
         tile_0_1 = board[0][1];
         tile_0_2 = board[0][2];
         tile_0_3 = board[0][3];
@@ -1461,7 +1611,20 @@ public class ReversiBoard extends javax.swing.JFrame {
         
     }
     
-    //swap between black and white pieces, used for makeMove
+    //swap between black and white pieces, used for makeMove/updateBoard
+    public void swapPlayer(ArrayList<int[]> moves, JButton[][] board) {
+        JButton[][] newBoard = board; //needed to update board
+        int[] compareArray = new int[2]; //gets the coordinate array stored in moves eg. [2,2] matches with tile_2_2
+        int xPos = 0; //first coordinate stored in compareArray
+        int yPos = 0; //second coordinate stored in compareArray
+        for (int i = 0; i < moves.size(); i++) {
+            compareArray = moves.get(i);
+            xPos = compareArray[0];
+            yPos = compareArray[1];
+            newBoard[xPos][yPos].setBackground(new Color(0,153,153));
+            newBoard[xPos][yPos].setEnabled(true); //reenables moves
+        }
+    }
     
     //places a piece on 
     public void makeMove() {
@@ -1473,7 +1636,8 @@ public class ReversiBoard extends javax.swing.JFrame {
         int[] compareArray = new int[2]; //gets the coordinate array stored in moves eg. [2,2] matches with tile_2_2
         int xPos = 0; //first coordinate stored in compareArray
         int yPos = 0; //second coordinate stored in compareArray
-        disableMoves(newBoard); //disables every button on the board
+        //disableMoves(newBoard); //disables every button on the board
+        //resetLegal(newBoard);
         for (int i = 0; i < moves.size(); i++) {
             compareArray = moves.get(i);
             xPos = compareArray[0];
@@ -1484,6 +1648,7 @@ public class ReversiBoard extends javax.swing.JFrame {
         updateBoard(newBoard);
     }
     
+    /* extraneous methods
     public void resetLegal (JButton[][] board) { //makes all buttons green again
         JButton[][] newBoard = board;
         for (int i = 0; i < 8; i++) {
@@ -1509,11 +1674,23 @@ public class ReversiBoard extends javax.swing.JFrame {
         int[][] arrayBoard = storeToArrayBoard(newBoard);
         for (int i = 0; i < 8; i++) {
             for (int k = 0; k < 8; k++) {
-                if (arrayBoard[i][k] == 0) //buttons with pieces will still be enabled
+                if (arrayBoard[i][k] == 0) //value for empty tiles
                     newBoard[i][k].setEnabled(false); //disables buttons
             }
         }
         updateBoard(newBoard);
+    }
+    
+    */
+    
+    public boolean checkWin(int[][] board) { 
+    	if (returnMoves(board).isEmpty()) {
+    		int[][] newBoard = makeReverseBoard(board);
+    		if (returnMoves(newBoard).isEmpty()) {
+    			return true;
+    		}
+    	}
+    	return false;
     }
     
     //logic functions
@@ -1599,11 +1776,10 @@ public class ReversiBoard extends javax.swing.JFrame {
         int[][] arrayBoard = new int[8][8];
         for (int i = 0; i < 8; i++) {
             for (int k = 0; k < 8; k++) {
-                
                 if (board[i][k].getText().isEmpty()) { //value for EMPTY tile
                     arrayBoard[i][k] = 0;
                 }
-                else if (board[i][k].getForeground().getRGB() == -1) { //RGB value for BLACK pieces
+                else if (board[i][k].getForeground().getRGB() == Color.BLACK.getRGB()) { //RGB value for BLACK pieces
                     arrayBoard[i][k] = 1;
                 }
                 else { //WHITE pieces
@@ -1615,13 +1791,18 @@ public class ReversiBoard extends javax.swing.JFrame {
     }
     
     public JButton[][] storeFromArrayBoard(int[][] board) {
-        JButton[][] buttonBoard = new JButton[8][8];
+        JButton[][] buttonBoard = boardList;
         for (int i = 0; i < 8; i++) {
             for (int k = 0; k < 8; k++) {
-                if (board[i][k] == 1) { //set value for BLACK pieces
+                if (board[i][k] == 0) { //value for EMPTY tiles
+                    
+                }
+                else if (board[i][k] == 1) { //value for BLACK pieces
+                    buttonBoard[i][k].setText("●");
                     buttonBoard[i][k].setForeground(Color.BLACK);
                 }
                 else { //WHITE pieces
+                    buttonBoard[i][k].setText("●");
                     buttonBoard[i][k].setForeground(Color.WHITE);
                 }
             }
@@ -1712,7 +1893,7 @@ public class ReversiBoard extends javax.swing.JFrame {
     public ArrayList<int[]> returnMoves(int[][] board) {//ARRAY OF ARRAYS
         //return possible moves for player2 (who is playing with 2 (i.e. white))
         //rules: empty, adjacent and must flip when placed
-
+        
 
         ArrayList<int[]> available = new ArrayList<int[]>();
         //so it should return something like {{1,2}, {2,2}, {3,4}} so each element is an array that represents a single tile. 
@@ -1723,7 +1904,8 @@ public class ReversiBoard extends javax.swing.JFrame {
         for (int i=0; i<8; i++) {
             for (int j=0; j<8; j++) {
                 COPY[i][j] = board[i][j];
-        }}
+            }
+        }
 
         for (int i=0; i<8; i++) {
             for (int j=0; j<8; j++) {
@@ -1752,9 +1934,165 @@ public class ReversiBoard extends javax.swing.JFrame {
         return available;
     }
    
+    //pointValue for a specific move. Testable
+    public int pointValue(int[] move) { //returns best move for a given board of ints. For example,it might return 
+		//point values for each region
+    	//CHANGEABLE, MAYBE TEST IT OUT
+		final int R5= 10; 
+		final int R3= 5;
+		final int R1= 0; 
+		final int R2= -5;
+		final int R4=-10;
+
+		//initializing variables
+		int pointvalue;
+
+		//main code
+		int x= move[0];
+		int y= move[1];
+		if ((x==0 && y==0) || (x==0 && y==7) || (x==7 && y==0) || (x==7 && y==7)) {
+			pointvalue = R5;
+		}			
+		else if (((x==2 || x==3 || x==4 || x==5)&& (y==0 | y==7)) || ((y==2 || y==3 || y==4 || y==5)&& (x==0 | x==7))) {
+			pointvalue = R3;
+		}
+		else if ((2<=x && x<=5) && (2<=y && y<=5)) {
+			pointvalue = R1;			
+		}
+		else if (((x==2 || x==3 || x==4 || x==5)&& (y==1 | y==6)) || ((y==2 || y==3 || y==4 || y==5)&& (x==1 | x==6))) {
+			pointvalue = R2;
+		}
+		else {
+			pointvalue = R4;
+		}
+
+		return pointvalue;
+    }
+
+    //best values for the whole board, zero levels deep
+    /*public int bestValue(int[][] board) { //returns best move for a given board of ints. For example,it might return 
+		//point values for each region
+    	//CHANGEABLE, MAYBE TEST IT OUT
+		
+		//initializing variables
+		ArrayList<int[]> best = new ArrayList<int[]>(); //RETURNs BEST 3 MOVES!!!!! at most	
+		int bestvalue = -100;
+		int secondvalue = -100;
+		int thirdvalue = -100;
+		int pointvalue;
+		int index = 0; 
+		
+		//main code
+		ArrayList<int[]> legalMoves = returnMoves(board);
+		for (int i=0; i<legalMoves.size(); i++) { 
+			int[] move = legalMoves.get(i);
+			pointvalue = pointValue(move);
+			
+			if (index == 0 && pointvalue>bestvalue) {
+				bestvalue = pointvalue;
+				best.set(index , move);
+				index++;
+			}
+			else if (index == 1) {
+				if (pointvalue>bestvalue) {
+					secondvalue = bestvalue;
+					bestvalue = pointvalue;
+					best.set(1, new int[] {best.get(0)[0], best.get(0)[1]});
+					best.set(0 , move);
+					index++;
+				}
+				else {
+					secondvalue = pointvalue;
+					best.set(1 , move);
+					index++;
+				}
+			}
+			else {
+				if (pointvalue>bestvalue) {
+					thirdvalue = secondvalue;
+					secondvalue = bestvalue;
+					bestvalue = pointvalue;
+					best.set(2, new int[] {best.get(1)[0], best.get(1)[1]});
+					best.set(1, new int[] {best.get(0)[0], best.get(0)[1]});
+					best.set(0 , move);
+					index++;
+				}
+				else if (pointvalue>secondvalue) {
+					thirdvalue = secondvalue;
+					secondvalue = pointvalue;
+					best.set(2, new int[] {best.get(1)[0], best.get(1)[1]});
+					best.set(1, move);
+					index++;
+				}
+				else {
+					if (pointvalue > thirdvalue) {
+						thirdvalue = pointvalue;
+						best.set(2, move);
+						index++;
+					}
+				}
+			}
+		}
+		return bestvalue;	
+    }*/
+    
+    public void makeMove(int[][] board, int player, int[] move) {
+    	board[move[0]][move[1]]=player;
+    }
+    
+    public int lookAhead(int [][] board, int level, int[] move) {//always minimizing
+    	// returns the best value for any possible move
+    	if (level==0) { 
+    		return pointValue(move);
+    	}
+
+    	else {
+    		ArrayList<int[]> movelist = returnMoves(board);
+    		int bestval = -998;
+    		for (int[] myMove : movelist) {
+    			int[][] COPY = makeBoardCopy(board);
+    			makeReverseBoard(COPY);
+    			makeMove(COPY,1,myMove);
+    			if (checkWin(COPY)==true) {
+    				return -1*1000;
+    			}
+    			int val = lookAhead(COPY,level-1,myMove);
+    			if (val > bestval) {
+    				bestval = val;
+    			}
+    		}
+    		return -1*bestval;
+    	}
+    }
+    
+    public int[] smartTurn(int[][] board, int level, int token) {
+    	// returns best legal move
+    	ArrayList<int[]> moveList = returnMoves(board);
+    	//random.shuffle(movelist)
+    	int bestval = -1001;
+    	int[] bestmove = new int[2];
+    	for (int[] myMove : moveList) {
+    		int[][] COPY = makeBoardCopy(board);
+    		if (token==2) {
+    			makeReverseBoard(COPY);
+    		}
+    		makeMove(COPY, 1 , myMove);
+    		if (checkWin(COPY)==true) {
+    			return myMove;
+    		}
+    		//val = calcboard(tempBoard,mymove)
+    		int val = lookAhead(COPY,level,myMove);
+	    	if (val > bestval) {
+	    		bestval = val;
+	    		bestmove = myMove;
+	    	}
+    	}
+    	return bestmove;
+    }
+
     //Aidan implementations
     
-    public static int[][] makeBoardCopy(int[][] oldBoard){ //creats a duplicate board with a seperate memory address but the same data
+    public int[][] makeBoardCopy(int[][] oldBoard){ //creats a duplicate board with a seperate memory address but the same data
         int[][] boardCopy = new int[8][8]; 
         for (int i = 0; i < 8; i++){ 
             for (int c = 0; c < 8; c++){ 
@@ -1764,22 +2102,22 @@ public class ReversiBoard extends javax.swing.JFrame {
       return boardCopy; //returns the identical board that has different memory address
     }
 
-    public static int[][] makeReverseBoard(int[][] oldBoard){ //reverses all of the colors on the board (black --> white && white --> black)
+    public int[][] makeReverseBoard(int[][] oldBoard){ //reverses all of the colors on the board (black --> white && white --> black)
         int[][] boardReverse = makeBoardCopy(oldBoard); //if not in the same class, make sure to modify the static method call
-        for (int[] row : boardReverse){ 
-            for (int element : row){ 
-            if (element == 1){ //black --> white
-                element = 2;
-            }
-            else if (element == 2){ // white --> black
-                element = 1;
+        for (int i = 0; i < 8; i++) { 
+            for (int k = 0; k < 8; k++) { 
+                if (boardReverse[i][k] == 1){ //black --> white
+                    boardReverse[i][k] = 2;
                 }
-            }
+                else if (boardReverse[i][k] == 2){ // white --> black
+                    boardReverse[i][k] = 1;
+                    }
+                }
         }
         return boardReverse; //returns a new board with all of the colors flipped
     }
 
-    public static int getWhiteScore(int[][] board){ //get total white pieces
+    public int getWhiteScore(int[][] board){ //get total white pieces
         int score = 0;
         for (int[] row : board){
             for (int element : row){
@@ -1792,7 +2130,7 @@ public class ReversiBoard extends javax.swing.JFrame {
         //!!!add GUI update and updateboard
     }
 
-    public static int getBlackScore(int[][] board){ //get total black pieces
+    public int getBlackScore(int[][] board){ //get total black pieces
         int score = 0;
         for (int [] row : board){
             for (int element : row){
@@ -1804,7 +2142,14 @@ public class ReversiBoard extends javax.swing.JFrame {
         return score;
         //!!!add GUI update and updateboard
     }
+      
+    //Random AI
 
+    public int[] randomChoice(ArrayList<int[]> possiblePoints){
+      int n = (int)(Math.random() * possiblePoints.size());
+      return possiblePoints.get(n);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton exitButton;
     private javax.swing.JButton jButton1;
