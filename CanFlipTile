@@ -1,0 +1,77 @@
+public boolean CanFlipTile(int wx, int wy, int bx, int by, int[][] hi) {
+    	int sum = bx+by-wx-wy;
+	//basically draws lines to figure out whether if someone is placing it, the new tile can flip the original tile 
+	//0 = empty, 1= black, 2=white
+		
+	//this perspective is that I'm the white tile, looking to flip a black tile
+		if (sum==-2) { 
+	        while (bx<7 && by<7) {
+	            bx++;
+	            by++;
+			if (hi[bx][by]==0) {return false;} //empty; therefore I cannot flip the tile
+	                // if (b.getColor(flipx,flipy,b)){return false;}
+			else if (hi[bx][by]==2) {return true;}
+			}
+		}
+		
+		else if (sum==2) {
+	            while (0<bx && 0<by) {
+	                bx--;
+	                by--;
+	                if (hi[bx][by]==0)  { return false;} //if tile is empty, then there's no way to flip so just return false
+	                else if (hi[bx][by]==2) {return true;} //
+	            }
+		}
+			
+	else if (sum==-1) {
+            if (bx==wx) {
+                while (0<by) {
+                    by--;
+                    if (hi[bx][by]==0)  { return false;}
+                    else if (hi[bx][by]==2)  { return true;}
+		}
+            }
+            else {
+		while (0<bx) {
+                    bx--;
+                    if (hi[bx][by]==0)  { return false;}
+                    else if (hi[bx][by]==2)  { return true;}
+		}
+            }
+	}
+	else if (sum==1) {
+            if (bx==wx) {
+		while (by<7) {
+                    by++;
+                    if (hi[bx][by]==0)  { return false;}
+                    else if (hi[bx][by]==2)  { return true;}
+		}
+            }
+            else {
+		while (bx<7) {
+                    bx++;
+                    if (hi[bx][by]==0)  { return false;}
+                    else if (hi[bx][by]==2)  { return true;}
+		}
+            }
+	}
+	else {//sum=0
+            if (bx>wx) {
+		while (bx<7 && 0<by) {
+                    bx++;
+                    by--;
+                    if (hi[bx][by]==0)  { return false;}
+                    else if (hi[bx][by]==2)  { return true;}
+		}
+            }
+            else { 
+		while (by<7 && 0<bx ) {
+                    bx--;
+                    by++;
+                    if (hi[bx][by]==0)  { return false;}
+                    else if (hi[bx][by]==2)  { return true;}
+		}
+            }
+	}
+		return false;
+    }
