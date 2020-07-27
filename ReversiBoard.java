@@ -2,7 +2,6 @@ import java.awt.*;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import javax.swing.plaf.metal.MetalButtonUI;
 
 
 /**
@@ -128,34 +127,25 @@ public class ReversiBoard extends javax.swing.JFrame {
 
         scoreField1.setEditable(false);
         scoreField1.setBackground(new java.awt.Color(0, 0, 0));
-        scoreField1.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
+        //indicates first move is user's turn
+        scoreField1.setFont(new Font("Arial Black", Font.BOLD+Font.ITALIC, 24)); // NOI18N
         scoreField1.setForeground(new java.awt.Color(255, 255, 255));
-        scoreField1.setText("Your Score");
+        scoreField1.setText("Player (White)");
         scoreField1.setBorder(null);
         scoreField1.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        scoreField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                scoreField1ActionPerformed(evt);
-            }
-        });
 
         scoreField2.setEditable(false);
         scoreField2.setBackground(new java.awt.Color(0, 0, 0));
         scoreField2.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
         scoreField2.setForeground(new java.awt.Color(255, 255, 255));
-        scoreField2.setText("Computer Score");
+        scoreField2.setText("Computer (Black)");
         scoreField2.setBorder(null);
-        scoreField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                scoreField2ActionPerformed(evt);
-            }
-        });
 
         score1Field.setEditable(false);
         score1Field.setBackground(new java.awt.Color(0, 0, 0));
         score1Field.setForeground(new java.awt.Color(255, 255, 255));
         score1Field.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        score1Field.setText("score1");
+        score1Field.setText("2");
         score1Field.setBorder(null);
         score1Field.setMargin(new java.awt.Insets(0, 0, 0, 0));
         score1Field.addActionListener(new java.awt.event.ActionListener() {
@@ -168,7 +158,7 @@ public class ReversiBoard extends javax.swing.JFrame {
         score2Field.setBackground(new java.awt.Color(0, 0, 0));
         score2Field.setForeground(new java.awt.Color(255, 255, 255));
         score2Field.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        score2Field.setText("score2");
+        score2Field.setText("2");
         score2Field.setBorder(null);
         score2Field.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -180,11 +170,21 @@ public class ReversiBoard extends javax.swing.JFrame {
         exitButton.setForeground(new java.awt.Color(255, 255, 255));
         exitButton.setText("Exit");
         exitButton.setBorder(null);
+        exitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitButtonActionPerformed(evt);
+            }
+        });
 
         resetButton.setBackground(new java.awt.Color(0, 0, 0));
         resetButton.setForeground(new java.awt.Color(255, 255, 255));
         resetButton.setText("Reset");
         resetButton.setBorder(null);
+        resetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetButtonActionPerformed(evt);
+            }
+        });
 
         tile_0_0.setBackground(new java.awt.Color(47, 173, 81));
         //test font color
@@ -1033,12 +1033,30 @@ public class ReversiBoard extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void scoreField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scoreField2ActionPerformed
+    private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scoreField2ActionPerformed
         // TODO add your handling code here:
+        //resets scores
+        score1Field.setText("2");
+        score2Field.setText("2");
+        //resets board
+        for (int i = 0; i < 8; i++) {
+            for (int k = 0; k < 8; k++) {
+                boardList[i][k].setText("");                            //resetting board pieces
+                boardList[i][k].setBackground(new Color(47,173,81));    //resetting board colors
+            }
+        }
+        //resets board colors
+        //restores original pieces
+        boardList[3][3].setText("●");
+        boardList[3][4].setText("●");
+        boardList[4][3].setText("●");
+        boardList[4][4].setText("●");
+        updateBoard(boardList);
     }//GEN-LAST:event_scoreField2ActionPerformed
 
-    private void scoreField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scoreField1ActionPerformed
+    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scoreField1ActionPerformed
         // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_scoreField1ActionPerformed
 
     private void score1FieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_score1FieldActionPerformed
@@ -1396,7 +1414,32 @@ public class ReversiBoard extends javax.swing.JFrame {
                 tile.setText("●");
                 arrayBoard[x][y] = 2;
                 boardList[x][y] = tile;
-                play();
+                
+                //flips captured pieces for player's move
+                flipTiles(compareArray,2);
+                updateScores();  //updates score on GUI
+                //updates the JButton array to match that of the arrayBoard
+                boardList = storeFromArrayBoard(arrayBoard);
+                //resets legalmove indicator
+                resetLegal(boardList);
+                //updates the GUI based on new boardList
+                updateBoard(boardList);
+                
+                //swaps bold font to Computer, indicating AI turn
+                scoreField1.setFont(new Font("Arial Black", Font.PLAIN, 24));
+                scoreField2.setFont(new Font("Arial Black", Font.BOLD+Font.ITALIC, 24));
+
+                //1 second delay to let user see their move
+                int delay = 1000;
+                Timer timer = new Timer(delay, new java.awt.event.ActionListener(){
+                @Override
+                public void actionPerformed(java.awt.event.ActionEvent e ){
+                    //AI move handler method
+                    play();
+                }
+                });
+                timer.setRepeats(false);
+                timer.start();
             }
         }
     }
@@ -1438,51 +1481,12 @@ public class ReversiBoard extends javax.swing.JFrame {
         ArrayList<int[]> legalMoves = new ArrayList<int[]>();
         legalMoves = guiBoard.returnMoves(arrayBoard);
         
-        int[][] reverseBoard = arrayBoard;
-        int[] aiMoveChoice = new int[2];
-        int aiMoveX = 0;
-        int aiMoveY = 0;
         //first turn display
         //gets all legal moves for user
         legalMoves = guiBoard.returnMoves(arrayBoard);
         //updates GUI to show legal moves
         guiBoard.showLegal(legalMoves, boardList);
 
-        //main code
-        /*
-        while(!guiBoard.checkWin(arrayBoard)) {
-            //gets all legal moves for user
-            legalMoves = guiBoard.returnMoves(arrayBoard);
-            //updates GUI to show legal moves
-            guiBoard.showLegal(legalMoves, boardList);
-            //waits for user to make a move
-            while(!userMadeMove) {
-                guiBoard.wait();
-            }
-            
-            
-            //swaps player
-            reverseBoard = makeReverseBoard(arrayBoard);
-            //returns legal moves for the AI
-            legalMoves = guiBoard.returnMoves(arrayBoard);
-            //AI chooses a move
-            aiMoveChoice = randomChoice(legalMoves);
-            //updates move choice on arrayBoard
-            aiMoveX = aiMoveChoice[0];
-            aiMoveY = aiMoveChoice[1];
-            arrayBoard[aiMoveX][aiMoveY] = 2;
-            //swaps board again to account for previous reverse
-            arrayBoard = makeReverseBoard(arrayBoard);
-            //updates the JButton array to match that of the arrayBoard
-            boardList = guiBoard.storeFromArrayBoard(arrayBoard);
-            //updates the GUI based on new boardList
-            guiBoard.updateBoard(boardList);
-            System.out.println("hello");
-            
-            //swaps board again for the user next turn
-            
-        }
-        */
     }
     
     public void play() {
@@ -1496,34 +1500,44 @@ public class ReversiBoard extends javax.swing.JFrame {
         
         //main code
         if(!checkWin(arrayBoard)) {
-            //gets all legal moves for user
-            legalMoves = returnMoves(arrayBoard);
-            //updates GUI to show legal moves
-            showLegal(legalMoves, boardList);
             //swaps player
             reverseBoard = makeReverseBoard(reverseBoard);
+            
             //returns legal moves for the AI
-            legalMoves = returnMoves(reverseBoard);
+            //legalMoves = returnMoves(reverseBoard);
             //AI chooses a move
-            aiMoveChoice = randomChoice(legalMoves);
+            aiMoveChoice = smartTurn(reverseBoard,0,1);
             //updates move choice on arrayBoard
             aiMoveX = aiMoveChoice[0];
             aiMoveY = aiMoveChoice[1];
             reverseBoard[aiMoveX][aiMoveY] = 2;
+            
+            //testing only - places marker on ai-chosen move
+            boardList[aiMoveX][aiMoveY].setBackground(Color.RED);
+            
             //update GUI with AI move
             boardList[aiMoveX][aiMoveY].setForeground(Color.BLACK);
+            
             //swaps board again to account for previous reverse
             arrayBoard = makeReverseBoard(reverseBoard);
+            //update board with AI's captured picees
+            flipTiles(aiMoveChoice,1);
             //updates the JButton array to match that of the arrayBoard
-            boardList = storeFromArrayBoard(arrayBoard); //nullpointer
+            boardList = storeFromArrayBoard(arrayBoard);
             //updates the GUI based on new boardList
             updateBoard(boardList);
+            
+            updateScores();
             
             //set up for next user turn
             //gets all legal moves for user
             legalMoves = returnMoves(arrayBoard);
             //updates GUI to show legal moves
             showLegal(legalMoves, boardList);
+            
+            //swaps bold font to Player, indicating User's turn
+            scoreField2.setFont(new Font("Arial Black", Font.PLAIN, 24));
+            scoreField1.setFont(new Font("Arial Black", Font.BOLD+Font.ITALIC, 24));
             
         }
     }
@@ -1606,11 +1620,6 @@ public class ReversiBoard extends javax.swing.JFrame {
         repaint();
     }
     
-    //clears board and places starting pieces; resets scores
-    public void resetBoard() {
-        
-    }
-    
     //swap between black and white pieces, used for makeMove/updateBoard
     public void swapPlayer(ArrayList<int[]> moves, JButton[][] board) {
         JButton[][] newBoard = board; //needed to update board
@@ -1624,11 +1633,6 @@ public class ReversiBoard extends javax.swing.JFrame {
             newBoard[xPos][yPos].setBackground(new Color(0,153,153));
             newBoard[xPos][yPos].setEnabled(true); //reenables moves
         }
-    }
-    
-    //places a piece on 
-    public void makeMove() {
-        
     }
     
     public void showLegal(ArrayList<int[]> moves, JButton[][] board) {
@@ -1648,7 +1652,7 @@ public class ReversiBoard extends javax.swing.JFrame {
         updateBoard(newBoard);
     }
     
-    /* extraneous methods
+    
     public void resetLegal (JButton[][] board) { //makes all buttons green again
         JButton[][] newBoard = board;
         for (int i = 0; i < 8; i++) {
@@ -1658,7 +1662,7 @@ public class ReversiBoard extends javax.swing.JFrame {
         }
         updateBoard(newBoard);
     }
-
+    /* extraneous methods
     public void enableMoves(JButton[][] board) { //enables all buttons on board, used as a soft reset between moves
         JButton[][] newBoard = board; //needed to update board
         for (int i = 0; i < 8; i++) {
@@ -1680,19 +1684,13 @@ public class ReversiBoard extends javax.swing.JFrame {
         }
         updateBoard(newBoard);
     }
-    
     */
     
-    public boolean checkWin(int[][] board) { 
-    	if (returnMoves(board).isEmpty()) {
-    		int[][] newBoard = makeReverseBoard(board);
-    		if (returnMoves(newBoard).isEmpty()) {
-    			return true;
-    		}
-    	}
-    	return false;
+    public void updateScores() {
+        score1Field.setText("" + getWhiteScore(arrayBoard));
+        score2Field.setText("" + getBlackScore(arrayBoard));
     }
-    
+
     //logic functions
     
     public JButton[][] storeBoard() { //stores the board in 
@@ -1810,43 +1808,53 @@ public class ReversiBoard extends javax.swing.JFrame {
         return buttonBoard;
     }
     
+    public boolean checkWin(int[][] board) { 
+    	if (returnMoves(board).isEmpty()) {
+    		int[][] newBoard = makeReverseBoard(board);
+    		if (returnMoves(newBoard).isEmpty()) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+    
     //Ellen implementations
     
-    public boolean CanFlipTile(int wx, int wy, int bx, int by, int[][] hi) {//"place" is the new tile of color 2, "flip" is the old tile of color 1
-	int sum = bx+by-wx-wy;
+    public boolean CanFlipTile(int wx, int wy, int bx, int by, int[][] hi) {
+    	int sum = bx+by-wx-wy;
 	//basically draws lines to figure out whether if someone is placing it, the new tile can flip the original tile 
 	//0 = empty, 1= black, 2=white
-		
+
 	//this perspective is that I'm the white tile, looking to flip a black tile
-	if (sum==-2) { 
-            while (bx<8 && by<8) {
-                bx++;
-		by++;
-		if (hi[bx][by]==0) {return false;} //empty; therefore I cannot flip the tile
-                // if (b.getColor(flipx,flipy,b)){return false;}
-		else if (hi[bx][by]==2) {return true;}
+		if (sum==-2) { 
+	        while (bx<7 && by<7) {
+	            bx++;
+	            by++;
+			if (hi[bx][by]==0) {return false;} //empty; therefore I cannot flip the tile
+	                // if (b.getColor(flipx,flipy,b)){return false;}
+			else if (hi[bx][by]==2) {return true;}
+			}
 		}
-	}
-		
-	else if (sum==2) {
-            while (0<=bx && 0<=by) {
-                bx--;
-                by--;
-                if (hi[bx][by]==0)  { return false;} //if tile is empty, then there's no way to flip so just return false
-                else if (hi[bx][by]==2) {return true;} //
-            }
-	}
-		
+
+		else if (sum==2) {
+	            while (0<bx && 0<by) {
+	                bx--;
+	                by--;
+	                if (hi[bx][by]==0)  { return false;} //if tile is empty, then there's no way to flip so just return false
+	                else if (hi[bx][by]==2) {return true;} //
+	            }
+		}
+
 	else if (sum==-1) {
             if (bx==wx) {
-                while (0<=by) {
+                while (0<by) {
                     by--;
                     if (hi[bx][by]==0)  { return false;}
                     else if (hi[bx][by]==2)  { return true;}
 		}
             }
             else {
-		while (0<=bx) {
+		while (0<bx) {
                     bx--;
                     if (hi[bx][by]==0)  { return false;}
                     else if (hi[bx][by]==2)  { return true;}
@@ -1855,14 +1863,14 @@ public class ReversiBoard extends javax.swing.JFrame {
 	}
 	else if (sum==1) {
             if (bx==wx) {
-		while (by<8) {
+		while (by<7) {
                     by++;
                     if (hi[bx][by]==0)  { return false;}
                     else if (hi[bx][by]==2)  { return true;}
 		}
             }
             else {
-		while (bx<8) {
+		while (bx<7) {
                     bx++;
                     if (hi[bx][by]==0)  { return false;}
                     else if (hi[bx][by]==2)  { return true;}
@@ -1871,7 +1879,7 @@ public class ReversiBoard extends javax.swing.JFrame {
 	}
 	else {//sum=0
             if (bx>wx) {
-		while (bx<8 && 0<=by) {
+		while (bx<7 && 0<by) {
                     bx++;
                     by--;
                     if (hi[bx][by]==0)  { return false;}
@@ -1879,7 +1887,7 @@ public class ReversiBoard extends javax.swing.JFrame {
 		}
             }
             else { 
-		while (by<8 && 0<=bx ) {
+		while (by<7 && 0<bx ) {
                     bx--;
                     by++;
                     if (hi[bx][by]==0)  { return false;}
@@ -1968,126 +1976,62 @@ public class ReversiBoard extends javax.swing.JFrame {
 
 		return pointvalue;
     }
-
-    //best values for the whole board, zero levels deep
-    /*public int bestValue(int[][] board) { //returns best move for a given board of ints. For example,it might return 
-		//point values for each region
-    	//CHANGEABLE, MAYBE TEST IT OUT
-		
-		//initializing variables
-		ArrayList<int[]> best = new ArrayList<int[]>(); //RETURNs BEST 3 MOVES!!!!! at most	
-		int bestvalue = -100;
-		int secondvalue = -100;
-		int thirdvalue = -100;
-		int pointvalue;
-		int index = 0; 
-		
-		//main code
-		ArrayList<int[]> legalMoves = returnMoves(board);
-		for (int i=0; i<legalMoves.size(); i++) { 
-			int[] move = legalMoves.get(i);
-			pointvalue = pointValue(move);
-			
-			if (index == 0 && pointvalue>bestvalue) {
-				bestvalue = pointvalue;
-				best.set(index , move);
-				index++;
-			}
-			else if (index == 1) {
-				if (pointvalue>bestvalue) {
-					secondvalue = bestvalue;
-					bestvalue = pointvalue;
-					best.set(1, new int[] {best.get(0)[0], best.get(0)[1]});
-					best.set(0 , move);
-					index++;
-				}
-				else {
-					secondvalue = pointvalue;
-					best.set(1 , move);
-					index++;
-				}
-			}
-			else {
-				if (pointvalue>bestvalue) {
-					thirdvalue = secondvalue;
-					secondvalue = bestvalue;
-					bestvalue = pointvalue;
-					best.set(2, new int[] {best.get(1)[0], best.get(1)[1]});
-					best.set(1, new int[] {best.get(0)[0], best.get(0)[1]});
-					best.set(0 , move);
-					index++;
-				}
-				else if (pointvalue>secondvalue) {
-					thirdvalue = secondvalue;
-					secondvalue = pointvalue;
-					best.set(2, new int[] {best.get(1)[0], best.get(1)[1]});
-					best.set(1, move);
-					index++;
-				}
-				else {
-					if (pointvalue > thirdvalue) {
-						thirdvalue = pointvalue;
-						best.set(2, move);
-						index++;
-					}
-				}
-			}
-		}
-		return bestvalue;	
-    }*/
     
     public void makeMove(int[][] board, int player, int[] move) {
     	board[move[0]][move[1]]=player;
     }
     
-    public int lookAhead(int [][] board, int level, int[] move) {//always minimizing
-    	// returns the best value for any possible move
-    	if (level==0) { 
-    		return pointValue(move);
-    	}
+    public int lookAhead(int [][] board, int level, int[] move) {//always minimizing the white player
+        // returns the minimum value for any possible move
+        if (level==0) { 
+            return pointValue(move);
+        }
 
-    	else {
-    		ArrayList<int[]> movelist = returnMoves(board);
-    		int bestval = -998;
-    		for (int[] myMove : movelist) {
-    			int[][] COPY = makeBoardCopy(board);
-    			makeReverseBoard(COPY);
-    			makeMove(COPY,1,myMove);
-    			if (checkWin(COPY)==true) {
-    				return -1*1000;
-    			}
-    			int val = lookAhead(COPY,level-1,myMove);
-    			if (val > bestval) {
-    				bestval = val;
-    			}
-    		}
-    		return -1*bestval;
-    	}
+        else {
+            ArrayList<int[]> movelist = returnMoves(board);
+            int bestval = -998;
+            for (int[] myMove : movelist) {
+                int[][] COPY = makeBoardCopy(board);
+                makeReverseBoard(COPY);
+                makeMove(COPY, 2, myMove);
+                if (checkWin(COPY)==true) {
+                    return -1000;
+                }
+                int val = lookAhead(COPY,level-1,myMove);
+                if (val > bestval) {
+                    bestval = val; //max
+                }
+            }
+            return -bestval; //then this is the minimum
+        }
     }
-    
+
     public int[] smartTurn(int[][] board, int level, int token) {
-    	// returns best legal move
-    	ArrayList<int[]> moveList = returnMoves(board);
-    	//random.shuffle(movelist)
-    	int bestval = -1001;
-    	int[] bestmove = new int[2];
-    	for (int[] myMove : moveList) {
-    		int[][] COPY = makeBoardCopy(board);
-    		if (token==2) {
-    			makeReverseBoard(COPY);
-    		}
-    		makeMove(COPY, 1 , myMove);
-    		if (checkWin(COPY)==true) {
-    			return myMove;
-    		}
-    		//val = calcboard(tempBoard,mymove)
-    		int val = lookAhead(COPY,level,myMove);
-	    	if (val > bestval) {
-	    		bestval = val;
-	    		bestmove = myMove;
-	    	}
-    	}
-    	return bestmove;
+        //level  = how much to look ahead??
+        //token  = player 1, or player 2
+        // returns best legal move for player 2 (white)
+
+        ArrayList<int[]> moveList = returnMoves(board);
+        //OPTION: include RANDOM SHUFFLE
+
+        int bestval = -1001;
+        int[] bestmove = new int[2];
+        for (int[] myMove : moveList) {
+            int[][] COPY = makeBoardCopy(board);
+            if (token==1) {
+                makeReverseBoard(COPY);
+            }
+            makeMove(COPY, 2 , myMove); 
+            if (checkWin(COPY)==true) {
+                return myMove;
+            }
+            int val = lookAhead(COPY,level,myMove);
+            if (val > bestval) {//maximize
+                bestval = val;
+                bestmove = myMove;
+            }
+        }
+        return bestmove;
     }
 
     //Aidan implementations
@@ -2127,7 +2071,6 @@ public class ReversiBoard extends javax.swing.JFrame {
             }
         }
         return score;
-        //!!!add GUI update and updateboard
     }
 
     public int getBlackScore(int[][] board){ //get total black pieces
@@ -2140,15 +2083,121 @@ public class ReversiBoard extends javax.swing.JFrame {
             }
         }
         return score;
-        //!!!add GUI update and updateboard
     }
+    
+    //Switch the color of one tile
+
+    public static void flipPosition(int[][] board, int x, int y){
+        if (board[x][y] == 1){
+            arrayBoard[x][y] = 2;
+        }
+        else if(board[x][y] == 2){
+            arrayBoard[x][y] = 1;
+        }
+    } 
       
     //Random AI
-
+    
     public int[] randomChoice(ArrayList<int[]> possiblePoints){
       int n = (int)(Math.random() * possiblePoints.size());
       return possiblePoints.get(n);
     }
+    
+    public int flipTiles(int[] points, int color){ //input board, coordinate, and color of piece
+        //board[points[0]][points[1]] = color; //adds the new piece to the board
+        int totalFlip = 0; 
+        if (points[1] < 7){ //evaluate to the right
+            for(int i = points[1] + 1; i < 8; i++){
+                if (arrayBoard[points[0]][i] == color){
+                    for(int c = points[1] + 1; c < i; c++){
+                        flipPosition(arrayBoard, points[0], c);
+                        totalFlip++;
+                    }
+                    break;
+                }
+            }
+        }
+        if (points[1] > 0){ //evaluate to the left
+            for (int i = points[1] - 1; i >= 0; i--){
+                if (arrayBoard[points[0]][i] == color){
+                    for (int c = points[1] - 1; c > i; c--){
+                        flipPosition(arrayBoard, points[0], c);
+                        totalFlip++;
+                    }
+                    break;
+                }
+            }
+        }
+        if (points[0] < 7){ //evaluate beneath
+            for (int i = points[0] + 1; i < 8; i++){
+                if (arrayBoard[i][points[1]] == color){
+                    for (int c = points[0] + 1; c < i; c++){
+                        flipPosition(arrayBoard, c, points[1]);
+                        totalFlip++;
+                    }
+                    break;
+                }
+            }
+        }
+        if (points[0] > 0){ //evaluate above
+            for (int i = points[0] - 1; i >= 0; i--){
+                if(arrayBoard[i][points[1]] == color){
+                    for (int c = points[0] - 1; c > i; c--){
+                        flipPosition(arrayBoard, c, points[1]);
+                        totalFlip++;
+                    }
+                    break;
+                }
+            }
+        }
+        if (points[0] < 7 && points[1] < 7){ //evaluate to bottom right
+            for (int i = points[0] + 1, j = points[1] + 1; i < 8 && j < 8; i++, j++){
+                if (arrayBoard[i][j] == color){
+                    for (int c = points[0] + 1, d = points[1] + 1; c < i && d < j; c++, d++){
+                        flipPosition(arrayBoard, c, d);
+                        totalFlip++;
+                    }
+                    break;
+                }
+            }
+        }
+        if (points[0] > 0 && points[1] > 0){ //evaluate to upper left
+            for (int i = points[0] - 1, j = points[1] - 1; i >= 0 && j >= 0; i--, j--){
+                if (arrayBoard[i][j] == color){
+                    for (int c = points[0] - 1, d = points[1] - 1; c > i && d > j; c--, d--){
+                        flipPosition(arrayBoard, c, d);
+                        totalFlip++;
+                    }
+                    break;
+                }
+            }
+        }
+        if (points[0] < 7 && points[1] > 0){ //evaluate to bottom left
+            for (int i = points[0] + 1, j = points[1] - 1; i < 8 && j >= 0; i++, j--){
+                if (arrayBoard[i][j] == color){
+                    for (int c = points[0] + 1, d = points[1] - 1; c < i && d > j; c++, d--){
+                        flipPosition(arrayBoard, c, d);
+                        totalFlip++;
+                    }
+                    break;
+                }
+            }
+        }
+        if (points[0] > 0 && points[1] < 7){ //evaluate to upper right
+            for (int i = points[0] - 1, j = points[1] + 1; i >= 0 && j < 8; i--, j++){
+                if (arrayBoard[i][j] == color){
+                    for (int c = points[0] - 1, d = points[1] + 1; c > i && d < j; c--, d++){
+                        flipPosition(arrayBoard, c, d);
+                        totalFlip++;
+                    }
+                    break;
+                }
+            }
+        }
+    return totalFlip; //returns the number of pieces that were flipped for evaluation
+}
+  
+  
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton exitButton;
