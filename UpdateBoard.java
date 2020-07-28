@@ -1,4 +1,4 @@
-
+//Update Board
 
 public static int updateBoard(int[][] board, int[] points, int color){ //input board, coordinate, and color of piece
   board[points[0]][points[1]] = color; //adds the new piece to the board
@@ -12,6 +12,9 @@ public static int updateBoard(int[][] board, int[] points, int color){ //input b
         }
         break;
       }
+      if (board[points[0]][i] == 0){
+        break;
+      }
     }
   }
   if (points[1] > 0){ //evaluate to the left
@@ -21,6 +24,9 @@ public static int updateBoard(int[][] board, int[] points, int color){ //input b
           flipPosition(board, points[0], c);
           totalFlip++;
         }
+        break;
+      }
+      if (board[points[0]][i] == 0){
         break;
       }
     }
@@ -34,6 +40,9 @@ public static int updateBoard(int[][] board, int[] points, int color){ //input b
         }
         break;
       }
+      if (board[i]][points[1]] == 0){
+        break;
+      }
     }
   }
   if (points[0] > 0){ //evaluate above
@@ -43,6 +52,9 @@ public static int updateBoard(int[][] board, int[] points, int color){ //input b
           flipPosition(board, c, points[1]);
           totalFlip++;
         }
+        break;
+      }
+      if (board[i]][points[1]] == 0){
         break;
       }
     }
@@ -56,6 +68,9 @@ public static int updateBoard(int[][] board, int[] points, int color){ //input b
         }
         break;
       }
+      if (board[i]][j] == 0){
+        break;
+      }
     }
   }
   if (points[0] > 0 && points[1] > 0){ //evaluate to upper left
@@ -65,6 +80,9 @@ public static int updateBoard(int[][] board, int[] points, int color){ //input b
           flipPosition(board, c, d);
           totalFlip++;
         }
+        break;
+      }
+      if (board[i]][j] == 0){
         break;
       }
     }
@@ -78,6 +96,9 @@ public static int updateBoard(int[][] board, int[] points, int color){ //input b
         }
         break;
       }
+      if (board[i]][j] == 0){
+        break;
+      }
     }
   }
   if (points[0] > 0 && points[1] < 7){ //evaluate to upper right
@@ -87,6 +108,9 @@ public static int updateBoard(int[][] board, int[] points, int color){ //input b
           flipPosition(board, c, d);
           totalFlip++;
         }
+        break;
+      }
+      if (board[i]][j] == 0){
         break;
       }
     }
