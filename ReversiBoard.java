@@ -1,7 +1,7 @@
 import java.awt.*; 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 /**
@@ -19,7 +19,10 @@ public class ReversiBoard extends javax.swing.JFrame {
     
     public static int[][] arrayBoard = new int[8][8];
     public static JButton[][] boardList = new JButton[8][8];
-    public static volatile boolean userMadeMove = false;
+    public static boolean aiCanMove = true;
+    int whiteWins = 0; int blackWins = 0; int draws = 0;
+    int trials = 0;
+    public static final int totalTrials = 100;
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -130,7 +133,7 @@ public class ReversiBoard extends javax.swing.JFrame {
         //indicates first move is user's turn
         scoreField1.setFont(new Font("Arial Black", Font.BOLD+Font.ITALIC, 24)); // NOI18N
         scoreField1.setForeground(new java.awt.Color(255, 255, 255));
-        scoreField1.setText("Player (White)");
+        scoreField1.setText("Computer (White)");
         scoreField1.setBorder(null);
         scoreField1.setMargin(new java.awt.Insets(0, 0, 0, 0));
 
@@ -138,7 +141,7 @@ public class ReversiBoard extends javax.swing.JFrame {
         scoreField2.setBackground(new java.awt.Color(0, 0, 0));
         scoreField2.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
         scoreField2.setForeground(new java.awt.Color(255, 255, 255));
-        scoreField2.setText("Computer (Black)");
+        scoreField2.setText("Player (Black)");
         scoreField2.setBorder(null);
 
         score1Field.setEditable(false);
@@ -1035,23 +1038,8 @@ public class ReversiBoard extends javax.swing.JFrame {
 
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scoreField2ActionPerformed
         // TODO add your handling code here:
-        //resets scores
-        score1Field.setText("2");
-        score2Field.setText("2");
-        //resets board
-        for (int i = 0; i < 8; i++) {
-            for (int k = 0; k < 8; k++) {
-                boardList[i][k].setText("");                            //resetting board pieces
-                boardList[i][k].setBackground(new Color(47,173,81));    //resetting board colors
-            }
-        }
-        //resets board colors
-        //restores original pieces
-        boardList[3][3].setText("●");
-        boardList[3][4].setText("●");
-        boardList[4][3].setText("●");
-        boardList[4][4].setText("●");
-        updateBoard(boardList);
+        //resetBoard();
+        aiplay();
     }//GEN-LAST:event_scoreField2ActionPerformed
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scoreField1ActionPerformed
@@ -1410,11 +1398,9 @@ public class ReversiBoard extends javax.swing.JFrame {
             xPos = compareArray[0];
             yPos = compareArray[1];
             if ((x == xPos) && y == yPos) {
-                tile.setForeground(Color.BLACK); //reverse, will actually play white
-                tile.setText("●");
+                //tile.setForeground(Color.BLACK); //reverse, will actually play white
                 arrayBoard[x][y] = 2;
-                boardList[x][y] = tile;
-                
+
                 //flips captured pieces for player's move
                 flipTiles(compareArray,2);
                 updateScores();  //updates score on GUI
@@ -1424,17 +1410,20 @@ public class ReversiBoard extends javax.swing.JFrame {
                 resetLegal(boardList);
                 //updates the GUI based on new boardList
                 updateBoard(boardList);
-                
+                updateScores();
                 //swaps bold font to Computer, indicating AI turn
                 scoreField1.setFont(new Font("Arial Black", Font.PLAIN, 24));
                 scoreField2.setFont(new Font("Arial Black", Font.BOLD+Font.ITALIC, 24));
 
+                //allow AI to move
+                aiCanMove = true;
+                
                 //1 second delay to let user see their move
                 int delay = 1000;
                 Timer timer = new Timer(delay, new java.awt.event.ActionListener(){
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent e ){
-                    //AI move handler method
+                //AI move handler method
                     play();
                 }
                 });
@@ -1447,12 +1436,287 @@ public class ReversiBoard extends javax.swing.JFrame {
     public void testArrayBoard() {
         System.out.println("==========");
         for (int i = 0; i < 8; i++) {
-            for (int k = 0; k < 8; k++) {
-                System.out.print(arrayBoard[i][k]);
-            }
-            System.out.println();
+        for (int k = 0; k < 8; k++) {
+        System.out.print(arrayBoard[i][k]);
+        }
+        System.out.println();
         }
         System.out.println("==========");
+    }
+    
+    public void play2() { //WHITE: smartTurn
+        ArrayList<int[]> legalMoves = new ArrayList<>();
+        int[][] reverseBoard = makeBoardCopy(arrayBoard);
+        int [] compareArray = new int[2];
+        var aiMoveChoice = new int[2];
+        int x; int y;
+        
+        //AI chooses smart turn
+        aiMoveChoice = smartTurn(reverseBoard,4,2); 
+        //Ai chooses randomly
+        //legalMoves = returnMoves(arrayBoard);
+        //aiMoveChoice = randomChoice(legalMoves);
+        //AI chooses a move: smartTurn with capture            
+        //aiMoveChoice = smartTurnCapture(reverseBoard,4,2).get(0);
+        x = aiMoveChoice[0];
+        y = aiMoveChoice[1];
+        if (x == 0 && y == 0) {
+            arrayBoard[x][y] = 2;
+        }
+        if (x == 7 && y == 7) {
+            arrayBoard[x][y] = 2;
+        }
+        //testArrayBoard();
+        
+        if (!checkWin(arrayBoard)) {
+            if (x != -1) {
+                boardList[x][y].setForeground(Color.BLACK); //reverse, will actually play white
+                boardList[x][y].setText("●");
+                arrayBoard[x][y] = 2;
+                
+                //flips captured pieces for player's move
+                flipTiles(aiMoveChoice,2);
+                updateScores();  //updates score on GUI
+                //updates the JButton array to match that of the arrayBoard
+                boardList = storeFromArrayBoard(arrayBoard);
+                //resets legalmove indicator
+                resetLegal(boardList);
+                //updates the GUI based on new boardList
+                updateBoard(boardList);
+                
+                //swaps bold font to Computer, indicating AI turn
+                scoreField1.setFont(new Font("Arial Black", Font.PLAIN, 24));
+                scoreField2.setFont(new Font("Arial Black", Font.BOLD+Font.ITALIC, 24));
+
+                //allow AI to move
+                aiCanMove = true;
+
+
+                aiplay();
+            }
+            else { //skip other turn
+                play2();
+            }
+        }
+        else {
+            if (checkWin(arrayBoard)) {//game has been won
+                trials++;
+                //decide winner
+                if (getWhiteScore(arrayBoard) > getBlackScore(arrayBoard)) {    // white wins
+                    whiteWins++;
+                    if (trials == totalTrials) {
+                        printResults();
+                    }
+                    else {
+                        exitButton.setText(trials + "");
+                        resetBoard();
+                        //aiplay();
+                    }
+                }
+                else if (getWhiteScore(arrayBoard) < getBlackScore(arrayBoard)) {   //black wins
+                    blackWins++;
+                    if (trials == totalTrials) {
+                        printResults();
+                    }
+                    else {
+                        exitButton.setText(trials + "");
+                        resetBoard();
+                        //aiplay();
+                    }
+                }
+                else { //draw
+                    draws++;
+                    if (trials == totalTrials) {
+                        printResults();
+                    }
+                    else {
+                        exitButton.setText(trials + "");
+                        resetBoard();
+                        //aiplay();
+                    }
+                }
+                aiCanMove = true;
+            }
+        }
+    }
+    
+    public void aiplay() { //BLACK: smartTurnCapture
+        ArrayList<int[]> legalMoves = new ArrayList<>();
+        
+        int[][] reverseBoard = makeBoardCopy(arrayBoard);
+        var aiMoveChoice = new int[2];
+        int aiMoveX; int aiMoveY;
+
+        if(!checkWin(arrayBoard) && aiCanMove) {
+            //swaps player
+            reverseBoard = makeReverseBoard(reverseBoard);
+
+            //AI chooses a move: smartTurn
+            //aiMoveChoice = smartTurn(reverseBoard,4,2);         
+            //AI chooses a move: smartTurn with capture            
+            aiMoveChoice = smartTurnCapture(reverseBoard,4,2).get(0);
+            //AI chooses a move: random move
+            //legalMoves = returnMoves(reverseBoard);
+            //aiMoveChoice = randomChoice(legalMoves);
+            
+            aiMoveX = aiMoveChoice[0];
+            aiMoveY = aiMoveChoice[1];
+            
+            if (aiMoveX != -1) { //AI has a legal move available 
+
+                //updates move choice on arrayBoard
+                reverseBoard[aiMoveX][aiMoveY] = 2;
+
+                //testing only - places marker on ai-chosen move
+                boardList[aiMoveX][aiMoveY].setBackground(Color.RED);
+
+                //update GUI with AI move
+                boardList[aiMoveX][aiMoveY].setForeground(Color.BLACK);
+
+                //swaps board again to account for previous reverse
+                arrayBoard = makeReverseBoard(reverseBoard);
+                //update board with AI's captured picees
+                flipTiles(aiMoveChoice,1);
+                //updates the JButton array to match that of the arrayBoard
+                boardList = storeFromArrayBoard(arrayBoard);
+                //updates the GUI based on new boardList
+                updateBoard(boardList);
+
+                updateScores();
+
+                //set up for next user turn
+                //gets all legal moves for user
+                legalMoves = returnMoves(arrayBoard);
+                if (!legalMoves.isEmpty()) { //user has legal moves available 
+                    //updates GUI to show legal moves
+                    showLegal(legalMoves, boardList);
+                    
+                    //swaps bold font to Player, indicating User's turn
+                    scoreField2.setFont(new Font("Arial Black", Font.PLAIN, 24));
+                    scoreField1.setFont(new Font("Arial Black", Font.BOLD+Font.ITALIC, 24));
+                    
+                    aiCanMove = false;
+                    play2();
+                    
+                }
+                else { //skip user turn
+                    aiplay();
+                }
+            }
+            else { //no legal moves left for AI
+                //swaps board again to account for previous reverse
+                arrayBoard = makeReverseBoard(reverseBoard);
+                //updates the GUI based on new boardList
+                updateBoard(boardList);
+                    
+                //set up for next user turn
+                //gets all legal moves for user
+                legalMoves = returnMoves(arrayBoard);
+                //updates GUI to show legal moves
+                showLegal(legalMoves, boardList);
+                //swaps bold font to Player, indicating User's turn
+                scoreField2.setFont(new Font("Arial Black", Font.PLAIN, 24));
+                scoreField1.setFont(new Font("Arial Black", Font.BOLD+Font.ITALIC, 24));
+                aiCanMove = false;
+
+                play2();
+            }
+        }
+        else { 
+            if (checkWin(arrayBoard)) {//game has been won
+                trials++;
+                //decide winner
+                if (getWhiteScore(arrayBoard) > getBlackScore(arrayBoard)) {    // white wins
+                    whiteWins++;
+                    if (trials == totalTrials) {
+                        printResults();
+                    }
+                    else {
+                        exitButton.setText(trials + "");
+                        resetBoard();
+                        //aiplay();
+                    }
+                }
+                else if (getWhiteScore(arrayBoard) < getBlackScore(arrayBoard)) {   //black wins
+                    blackWins++;
+                    if (trials == totalTrials) {
+                        printResults();
+                    }
+                    else {
+                        exitButton.setText(trials + "");
+                        resetBoard();
+                        //aiplay();
+                    }
+                }
+                else { //draw
+                    draws++;
+                    if (trials == totalTrials) {
+                        printResults();
+                    }
+                    else {
+                        exitButton.setText(trials + "");
+                        resetBoard();
+                        //aiplay();
+                    }
+                }
+                aiCanMove = true;
+            }
+        }
+    }
+
+    public void printResults() {
+        System.out.println("TRIAL RESULTS");
+        System.out.println("Number of white wins: " + whiteWins);
+        System.out.println("Number of black wins: " + blackWins);
+        System.out.println("Number of draws: " + draws);
+        System.out.println("Total Trials: " + trials);
+        System.out.println("=======================");
+    }
+    
+    public void resetBoard() {
+        //resets scores
+        score1Field.setText("2");
+        score2Field.setText("2");
+        //resets board
+        for (int i = 0; i < 8; i++) {
+            for (int k = 0; k < 8; k++) {
+                boardList[i][k].setText("");                            //resetting board pieces
+                boardList[i][k].setBackground(new Color(47,173,81));    //resetting board colors
+            }
+        }
+        //resets win text
+        scoreField1.setText("Player (White)");
+        scoreField2.setText("Player (Black)");
+        //restores original pieces
+        boardList[3][3].setText("●");
+        boardList[3][3].setForeground(Color.WHITE);
+        boardList[3][4].setText("●");
+        boardList[3][4].setForeground(Color.BLACK);
+        boardList[4][3].setText("●");
+        boardList[4][3].setForeground(Color.BLACK);
+        boardList[4][4].setText("●");
+        boardList[4][4].setForeground(Color.WHITE);
+        
+        arrayBoard = storeToArrayBoard(boardList);
+        updateBoard(boardList);
+        
+        //resets for player move
+        ArrayList<int[]> legalMoves = new ArrayList<>();
+        
+        //first turn display
+        //gets all legal moves for user
+        legalMoves = returnMoves(arrayBoard);
+        //updates GUI to show legal moves
+        showLegal(legalMoves, boardList);
+    }
+    //testing method
+    public void setBlack() {
+        for (int i = 0; i < 8; i++) {
+            for (int k = 0; k < 8; k++) {
+                boardList[i][k].setBackground(Color.BLACK);
+            }
+        }
+        updateBoard(boardList);
     }
     
     public static void main(String args[]) throws InterruptedException {
@@ -1475,70 +1739,141 @@ public class ReversiBoard extends javax.swing.JFrame {
         guiBoard.updateBoard(boardList);
         
         
-        //all below is testing
-        
-        //test returnMoves
-        ArrayList<int[]> legalMoves = new ArrayList<int[]>();
-        legalMoves = guiBoard.returnMoves(arrayBoard);
+        ArrayList<int[]> legalMoves = new ArrayList<>();
         
         //first turn display
+        //int[][] reverseBoard = guiBoard.makeReverseBoard(arrayBoard);
         //gets all legal moves for user
         legalMoves = guiBoard.returnMoves(arrayBoard);
         //updates GUI to show legal moves
         guiBoard.showLegal(legalMoves, boardList);
-
+        
+        //ai vs. ai
+        
+        //testing
+        /*for (int i = 0; i < totalTrials; i++) {
+        guiBoard.aiplay();
+        }
+        guiBoard.whiteWins = 0;
+        guiBoard.blackWins = 0;
+        guiBoard.draws = 0;
+        guiBoard.resetBoard();
+        guiBoard.trials = 0;
+        for (int i = 0; i < totalTrials; i++) {
+        guiBoard.aiplay();
+        }
+        guiBoard.whiteWins = 0;
+        guiBoard.blackWins = 0;
+        guiBoard.draws = 0;
+        guiBoard.resetBoard();
+        guiBoard.trials = 0;
+        for (int i = 0; i < totalTrials; i++) {
+        guiBoard.aiplay();
+        }
+        guiBoard.whiteWins = 0;
+        guiBoard.blackWins = 0;
+        guiBoard.draws = 0;
+        guiBoard.resetBoard();
+        guiBoard.trials = 0;
+        for (int i = 0; i < totalTrials; i++) {
+        guiBoard.aiplay();
+        }
+        guiBoard.whiteWins = 0;
+        guiBoard.blackWins = 0;
+        guiBoard.draws = 0;
+        guiBoard.resetBoard();
+        guiBoard.trials = 0;
+        for (int i = 0; i < totalTrials; i++) {
+        guiBoard.aiplay();
+        }*/
     }
     
     public void play() {
-        ArrayList<int[]> legalMoves = new ArrayList<int[]>();
-        legalMoves = returnMoves(arrayBoard);
+        ArrayList<int[]> legalMoves = new ArrayList<>();
         
         int[][] reverseBoard = makeBoardCopy(arrayBoard);
-        int[] aiMoveChoice = new int[2];
-        int aiMoveX = 0;
-        int aiMoveY = 0;
-        
-        //main code
-        if(!checkWin(arrayBoard)) {
+        var aiMoveChoice = new int[2];
+        int aiMoveX; int aiMoveY;
+
+        if(!checkWin(arrayBoard) && aiCanMove) {
             //swaps player
             reverseBoard = makeReverseBoard(reverseBoard);
-            
-            //returns legal moves for the AI
-            //legalMoves = returnMoves(reverseBoard);
-            //AI chooses a move
-            aiMoveChoice = smartTurn(reverseBoard,0,1);
-            //updates move choice on arrayBoard
+
+            //AI chooses a move: smartTurn
+            //aiMoveChoice = smartTurn(reverseBoard,0,1);         
+            //AI chooses a move: smartTurn with capture
+            aiMoveChoice = smartTurnCapture(reverseBoard,0,1).get(0);
             aiMoveX = aiMoveChoice[0];
             aiMoveY = aiMoveChoice[1];
-            reverseBoard[aiMoveX][aiMoveY] = 2;
-            
-            //testing only - places marker on ai-chosen move
-            boardList[aiMoveX][aiMoveY].setBackground(Color.RED);
-            
-            //update GUI with AI move
-            boardList[aiMoveX][aiMoveY].setForeground(Color.BLACK);
-            
-            //swaps board again to account for previous reverse
-            arrayBoard = makeReverseBoard(reverseBoard);
-            //update board with AI's captured picees
-            flipTiles(aiMoveChoice,1);
-            //updates the JButton array to match that of the arrayBoard
-            boardList = storeFromArrayBoard(arrayBoard);
-            //updates the GUI based on new boardList
-            updateBoard(boardList);
-            
-            updateScores();
-            
-            //set up for next user turn
-            //gets all legal moves for user
-            legalMoves = returnMoves(arrayBoard);
-            //updates GUI to show legal moves
-            showLegal(legalMoves, boardList);
-            
-            //swaps bold font to Player, indicating User's turn
-            scoreField2.setFont(new Font("Arial Black", Font.PLAIN, 24));
-            scoreField1.setFont(new Font("Arial Black", Font.BOLD+Font.ITALIC, 24));
-            
+            if (aiMoveX != -1) { //AI has a legal move available 
+                
+                //updates move choice on arrayBoard
+                reverseBoard[aiMoveX][aiMoveY] = 2;
+
+                //testing only - places marker on ai-chosen move
+                boardList[aiMoveX][aiMoveY].setBackground(Color.RED);
+                
+                //update GUI with AI move
+                boardList[aiMoveX][aiMoveY].setForeground(Color.WHITE);
+                
+                //swaps board again to account for previous reverse
+                arrayBoard = makeReverseBoard(reverseBoard);
+                //update board with AI's captured picees
+                flipTiles(aiMoveChoice,1);
+                //updates the JButton array to match that of the arrayBoard
+                boardList = storeFromArrayBoard(arrayBoard);
+                //updates the GUI based on new boardList
+                updateBoard(boardList);
+                
+                updateScores();
+
+                //set up for next user turn
+                //gets all legal moves for user
+                legalMoves = returnMoves(arrayBoard);
+                if (!legalMoves.isEmpty()) { //user has legal moves available 
+                    //updates GUI to show legal moves
+                    showLegal(legalMoves, boardList);
+                    
+                    //swaps bold font to Player, indicating User's turn
+                    scoreField2.setFont(new Font("Arial Black", Font.PLAIN, 24));
+                    scoreField1.setFont(new Font("Arial Black", Font.BOLD+Font.ITALIC, 24));
+                    aiCanMove = false;
+                }
+                else { //skip user turn
+                    play();
+                }
+            }
+            else { //no legal moves left for AI
+                //swaps board again to account for previous reverse
+                arrayBoard = makeReverseBoard(reverseBoard);
+                //updates the GUI based on new boardList
+                updateBoard(boardList);
+                    
+                //set up for next user turn
+                //gets all legal moves for user
+                legalMoves = returnMoves(arrayBoard);
+                //updates GUI to show legal moves
+                showLegal(legalMoves, boardList);
+                //swaps bold font to Player, indicating User's turn
+                scoreField2.setFont(new Font("Arial Black", Font.PLAIN, 24));
+                scoreField1.setFont(new Font("Arial Black", Font.BOLD+Font.ITALIC, 24));
+                aiCanMove = false;
+            }
+        }
+        else { 
+            if (checkWin(arrayBoard)) {//game has been won
+                //decide winner
+                if (getWhiteScore(arrayBoard) > getBlackScore(arrayBoard)) {    // white wins
+                    scoreField1.setText("White wins!");
+                }
+                else if (getWhiteScore(arrayBoard) < getBlackScore(arrayBoard)) {   //black wins
+                    scoreField2.setText("Black wins!");
+                }
+                else { //draw
+                    scoreField1.setText("Draw!");
+                    scoreField2.setText("Draw!");
+                }
+            }
         }
     }
             
@@ -1810,10 +2145,10 @@ public class ReversiBoard extends javax.swing.JFrame {
     
     public boolean checkWin(int[][] board) { 
     	if (returnMoves(board).isEmpty()) {
-    		int[][] newBoard = makeReverseBoard(board);
-    		if (returnMoves(newBoard).isEmpty()) {
-    			return true;
-    		}
+            int[][] newBoard = makeReverseBoard(board);
+            if (returnMoves(newBoard).isEmpty()) {
+    		return true;
+            }
     	}
     	return false;
     }
@@ -1917,26 +2252,41 @@ public class ReversiBoard extends javax.swing.JFrame {
 
         for (int i=0; i<8; i++) {
             for (int j=0; j<8; j++) {
-                if (COPY[i][j]==1) {//if opponent had placed a piece on this cell
+                    if (COPY[i][j]==1) {//if opponent had placed a piece on this cell
 
-                    //find adjacent empty squares
-                    int r= i-1; //super long code
-                    int c= j-1; //basically if it's one of the four adjacent squares
+                        //find adjacent empty squares
+                        int r= i-1; //super long code
+                        int c= j-1; //basically if it's one of the four adjacent squares
 
-                    for (int row = r; row<r+3; row++) {
-                        for (int col = c; col<c+3; col++) {
-                            if (0<= row && row<8 && 0<= col && col<8 && !(row==i && col==j)) {
-                                if (COPY[row][col]==0 &&  CanFlipTile(row,col,i,j,board)) {//if there exists an empty adjacent tile
-                                    int[] Point = new int[2];
-                                    Point[0]=row;
-                                    Point[1]=col;
-                                    available.add(index, Point);
-                                    index++;
+                        for (int row = r; row<r+3; row++) {
+                            for (int col = c; col<c+3; col++) {
+                                if (0<= row && row<8 && 0<= col && col<8 && !(row==i && col==j)) {
+                                    if (COPY[row][col]==0 &&  CanFlipTile(row,col,i,j,board)) {//if there exists an empty adjacent tile
+                                        int[] Point = new int[2];
+                                        Point[0]=row;
+                                        Point[1]=col;
+                                        available.add(index, Point);
+                                        index++;
+                                    }
                                 }
                             }
                         }
                     }
                 }
+            }
+        //clean moves for redundancy
+        int i = 0;
+        int[] tempMove = new int[2];
+        int x; int y;
+        while (i < available.size()) {
+            tempMove = available.get(i);
+            x = tempMove[0];
+            y = tempMove[1];
+            if (arrayBoard[x][y] != 0) {
+                available.remove(i);
+            }
+            else {
+                i++;
             }
         }
         return available;
@@ -2001,6 +2351,7 @@ public class ReversiBoard extends javax.swing.JFrame {
                 if (val > bestval) {
                     bestval = val; //max
                 }
+                
             }
             return -bestval; //then this is the minimum
         }
@@ -2009,30 +2360,115 @@ public class ReversiBoard extends javax.swing.JFrame {
     public int[] smartTurn(int[][] board, int level, int token) {
         //level  = how much to look ahead??
         //token  = player 1, or player 2
-        // returns best legal move for player 2 (white)
+        //returns best legal move for player 2 (white)
 
         ArrayList<int[]> moveList = returnMoves(board);
-        //OPTION: include RANDOM SHUFFLE
-
+        ArrayList<int[]> allMoves = new ArrayList<>();
         int bestval = -1001;
         int[] bestmove = new int[2];
-        for (int[] myMove : moveList) {
-            int[][] COPY = makeBoardCopy(board);
-            if (token==1) {
-                makeReverseBoard(COPY);
+        
+        if (moveList.isEmpty()) {
+            bestmove[0] = -1;
+            bestmove[1] = -1;
+            return bestmove;
+        }
+        else {
+            for (int[] myMove : moveList) {
+                int[][] COPY = makeBoardCopy(board);
+                if (token==1) {
+                    makeReverseBoard(COPY);
+                }
+                makeMove(COPY, 2 , myMove); 
+                if (checkWin(COPY)==true) {
+                    return myMove;
+                }
+                int val = lookAhead(COPY,level,myMove);
+                if (val > bestval) {//maximize
+                    allMoves.clear();
+                    bestval = val;
+                    bestmove = myMove;
+                    allMoves.add(bestmove);
+                }
+                else if (val == bestval) {
+                    allMoves.add(myMove);
+                }
             }
-            makeMove(COPY, 2 , myMove); 
-            if (checkWin(COPY)==true) {
-                return myMove;
+            if (allMoves.size() != 1) { //randomize the choice, if there's more than one
+                    int randomNum = ThreadLocalRandom.current().nextInt(0, allMoves.size()); //generate random number to choose between moves
+                    bestmove = allMoves.get(randomNum);
+                }
+            
+            return bestmove;
+        }
+    }
+    
+    public ArrayList<int[]> smartTurnCapture(int[][] board, int level, int token) {
+
+
+        ArrayList<int[]> moveList = returnMoves(board);
+        ArrayList<int[]> bestMoves = new ArrayList<>();
+        
+        int bestval = -1001;
+        int[] bestmove = new int[2];
+        
+        if (moveList.isEmpty()) { //no legal moves
+            bestmove[0] = -1;
+            bestmove[1] = -1;
+            bestMoves.add(bestmove);
+            return bestMoves;
+        }
+        else {
+            for (int[] myMove : moveList) {
+                int[][] COPY = makeBoardCopy(board);
+                if (token==1) {
+                    makeReverseBoard(COPY);
+                }
+                makeMove(COPY, 2 , myMove); 
+                if (checkWin(COPY)==true) {
+                    bestMoves.add(myMove);
+                    return bestMoves;
+                }
+                int val = lookAhead(COPY,level,myMove);
+                if (val > bestval) {//maximize
+                    bestMoves.clear();   //clear movelist, since there is a better move
+                    bestval = val;
+                    bestmove = myMove;
+                    bestMoves.add(bestmove);
+                }
+                //my code
+                else if (val == bestval) {
+                    bestMoves.add(myMove);
+                }
+                //end of my code
             }
-            int val = lookAhead(COPY,level,myMove);
-            if (val > bestval) {//maximize
-                bestval = val;
-                bestmove = myMove;
+            //compare bestMoves for number of captured pieces
+            if (bestMoves.size() == 1) {
+                return bestMoves;
+            }
+            else {
+                int mostFlips = 0;
+                ArrayList<int[]> mostCaptureMove = new ArrayList<>();
+                for (int[] move : bestMoves) {
+                    int temp = getFlips(move,2);
+                    if (getFlips(move,1) > mostFlips) {
+                        mostCaptureMove.clear();
+                        mostCaptureMove.add(move);
+                    }
+                    else if (getFlips(move,1) == mostFlips) {
+                        mostCaptureMove.add(move);
+                    }
+                }
+                if (mostCaptureMove.size() != 1) { //randomize the choice, if there's more than one
+                    int randomNum = ThreadLocalRandom.current().nextInt(0, mostCaptureMove.size()); //generate random number to choose between moves
+                    int[] chosenMove = mostCaptureMove.get(randomNum);
+                    mostCaptureMove.clear();
+                    mostCaptureMove.add(chosenMove);
+                }
+                return mostCaptureMove;
             }
         }
-        return bestmove;
     }
+    
 
     //Aidan implementations
     
@@ -2099,12 +2535,18 @@ public class ReversiBoard extends javax.swing.JFrame {
     //Random AI
     
     public int[] randomChoice(ArrayList<int[]> possiblePoints){
-      int n = (int)(Math.random() * possiblePoints.size());
-      return possiblePoints.get(n);
+        if (!possiblePoints.isEmpty()) {
+            int n = (int)(Math.random() * possiblePoints.size());
+            return possiblePoints.get(n);
+        }
+        else {
+            int[] noMoves = {-1,-1};
+            return noMoves;
+        }
     }
     
     public int flipTiles(int[] points, int color){ //input board, coordinate, and color of piece
-        //board[points[0]][points[1]] = color; //adds the new piece to the board
+        arrayBoard[points[0]][points[1]] = color; //adds the new piece to the board
         int totalFlip = 0; 
         if (points[1] < 7){ //evaluate to the right
             for(int i = points[1] + 1; i < 8; i++){
@@ -2113,6 +2555,9 @@ public class ReversiBoard extends javax.swing.JFrame {
                         flipPosition(arrayBoard, points[0], c);
                         totalFlip++;
                     }
+                    break;
+                }
+                if (arrayBoard[points[0]][i] == 0){
                     break;
                 }
             }
@@ -2126,6 +2571,9 @@ public class ReversiBoard extends javax.swing.JFrame {
                     }
                     break;
                 }
+                if (arrayBoard[points[0]][i] == 0){
+                    break;
+                }
             }
         }
         if (points[0] < 7){ //evaluate beneath
@@ -2135,6 +2583,9 @@ public class ReversiBoard extends javax.swing.JFrame {
                         flipPosition(arrayBoard, c, points[1]);
                         totalFlip++;
                     }
+                    break;
+                }
+                if (arrayBoard[i][points[1]] == 0){
                     break;
                 }
             }
@@ -2148,6 +2599,9 @@ public class ReversiBoard extends javax.swing.JFrame {
                     }
                     break;
                 }
+                if (arrayBoard[i][points[1]] == 0){
+                    break;
+                }
             }
         }
         if (points[0] < 7 && points[1] < 7){ //evaluate to bottom right
@@ -2157,6 +2611,9 @@ public class ReversiBoard extends javax.swing.JFrame {
                         flipPosition(arrayBoard, c, d);
                         totalFlip++;
                     }
+                    break;
+                }
+                if (arrayBoard[i][j] == 0){
                     break;
                 }
             }
@@ -2170,6 +2627,9 @@ public class ReversiBoard extends javax.swing.JFrame {
                     }
                     break;
                 }
+                if (arrayBoard[i][j] == 0){
+                    break;
+                }
             }
         }
         if (points[0] < 7 && points[1] > 0){ //evaluate to bottom left
@@ -2179,6 +2639,9 @@ public class ReversiBoard extends javax.swing.JFrame {
                         flipPosition(arrayBoard, c, d);
                         totalFlip++;
                     }
+                    break;
+                }
+                if (arrayBoard[i][j] == 0){
                     break;
                 }
             }
@@ -2192,10 +2655,132 @@ public class ReversiBoard extends javax.swing.JFrame {
                     }
                     break;
                 }
+                if (arrayBoard[i][j] == 0){
+                    break;
+                }
             }
         }
-    return totalFlip; //returns the number of pieces that were flipped for evaluation
-}
+        return totalFlip; //returns the number of pieces that were flipped for evaluation
+    }
+    
+    public int getFlips(int[] points, int color) {
+        int[][] tempBoard = makeBoardCopy(arrayBoard);
+        tempBoard[points[0]][points[1]] = color; //adds the new piece to the board
+        int totalFlip = 0; 
+        if (points[1] < 7){ //evaluate to the right
+            for(int i = points[1] + 1; i < 8; i++){
+                if (tempBoard[points[0]][i] == color){
+                    for(int c = points[1] + 1; c < i; c++){
+                        flipPosition(tempBoard, points[0], c);
+                        totalFlip++;
+                    }
+                    break;
+                }
+                if (tempBoard[points[0]][i] == 0){
+                    break;
+                }
+            }
+        }
+        if (points[1] > 0){ //evaluate to the left
+            for (int i = points[1] - 1; i >= 0; i--){
+                if (tempBoard[points[0]][i] == color){
+                    for (int c = points[1] - 1; c > i; c--){
+                        flipPosition(tempBoard, points[0], c);
+                        totalFlip++;
+                    }
+                    break;
+                }
+                if (tempBoard[points[0]][i] == 0){
+                    break;
+                }
+            }
+        }
+        if (points[0] < 7){ //evaluate beneath
+            for (int i = points[0] + 1; i < 8; i++){
+                if (tempBoard[i][points[1]] == color){
+                    for (int c = points[0] + 1; c < i; c++){
+                        flipPosition(tempBoard, c, points[1]);
+                        totalFlip++;
+                    }
+                    break;
+                }
+                if (tempBoard[i][points[1]] == 0){
+                    break;
+                }
+            }
+        }
+        if (points[0] > 0){ //evaluate above
+            for (int i = points[0] - 1; i >= 0; i--){
+                if(tempBoard[i][points[1]] == color){
+                    for (int c = points[0] - 1; c > i; c--){
+                        flipPosition(tempBoard, c, points[1]);
+                        totalFlip++;
+                    }
+                    break;
+                }
+                if (tempBoard[i][points[1]] == 0){
+                    break;
+                }
+            }
+        }
+        if (points[0] < 7 && points[1] < 7){ //evaluate to bottom right
+            for (int i = points[0] + 1, j = points[1] + 1; i < 8 && j < 8; i++, j++){
+                if (tempBoard[i][j] == color){
+                    for (int c = points[0] + 1, d = points[1] + 1; c < i && d < j; c++, d++){
+                        flipPosition(tempBoard, c, d);
+                        totalFlip++;
+                    }
+                    break;
+                }
+                if (tempBoard[i][j] == 0){
+                    break;
+                }
+            }
+        }
+        if (points[0] > 0 && points[1] > 0){ //evaluate to upper left
+            for (int i = points[0] - 1, j = points[1] - 1; i >= 0 && j >= 0; i--, j--){
+                if (tempBoard[i][j] == color){
+                    for (int c = points[0] - 1, d = points[1] - 1; c > i && d > j; c--, d--){
+                        flipPosition(tempBoard, c, d);
+                        totalFlip++;
+                    }
+                    break;
+                }
+                if (tempBoard[i][j] == 0){
+                    break;
+                }
+            }
+        }
+        if (points[0] < 7 && points[1] > 0){ //evaluate to bottom left
+            for (int i = points[0] + 1, j = points[1] - 1; i < 8 && j >= 0; i++, j--){
+                if (tempBoard[i][j] == color){
+                    for (int c = points[0] + 1, d = points[1] - 1; c < i && d > j; c++, d--){
+                        flipPosition(tempBoard, c, d);
+                        totalFlip++;
+                    }
+                    break;
+                }
+                if (tempBoard[i][j] == 0){
+                    break;
+                }
+            }
+        }
+        if (points[0] > 0 && points[1] < 7){ //evaluate to upper right
+            for (int i = points[0] - 1, j = points[1] + 1; i >= 0 && j < 8; i--, j++){
+                if (tempBoard[i][j] == color){
+                    for (int c = points[0] - 1, d = points[1] + 1; c > i && d < j; c--, d++){
+                        flipPosition(tempBoard, c, d);
+                        totalFlip++;
+                    }
+                    break;
+                }
+                if (tempBoard[i][j] == 0){
+                    break;
+                }
+            }
+        }
+        return totalFlip; //returns the number of pieces that were flipped for evaluation
+    }
   
   
     
