@@ -1058,329 +1058,329 @@ public class ReversiBoard extends javax.swing.JFrame {
     private void tile_0_0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_0_0ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_0_0,0,0);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_0_0ActionPerformed
     private void tile_0_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_0_1ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_0_1,0,1);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_0_1ActionPerformed
     private void tile_0_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_0_2ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_0_2,0,2);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_0_2ActionPerformed
     private void tile_0_3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_0_3ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_0_3,0,3);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_0_3ActionPerformed
     private void tile_0_4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_0_4ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_0_4,0,4);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_0_4ActionPerformed
     private void tile_0_5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_0_5ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_0_5,0,5);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_0_5ActionPerformed
     private void tile_0_6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_0_6ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_0_6,0,6);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_0_6ActionPerformed
     private void tile_0_7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_0_7ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_0_7,0,7);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_0_7ActionPerformed
     
     private void tile_1_0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_1_0ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_1_0,1,0);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_1_0ActionPerformed
     private void tile_1_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_1_1ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_1_1,1,1);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_1_1ActionPerformed
     private void tile_1_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_1_2ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_1_2,1,2);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_1_2ActionPerformed
     private void tile_1_3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_1_3ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_1_3,1,3);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_1_3ActionPerformed
     private void tile_1_4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_1_4ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_1_4,1,4);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_1_4ActionPerformed
     private void tile_1_5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_1_5ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_1_5,1,5);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_1_5ActionPerformed
     private void tile_1_6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_1_6ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_1_6,1,6);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_1_6ActionPerformed
     private void tile_1_7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_1_7ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_1_7,1,7);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_1_7ActionPerformed
     
     private void tile_2_0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_2_0ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_2_0,2,0);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_2_0ActionPerformed
     private void tile_2_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_2_1ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_2_1,2,1);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_2_1ActionPerformed
     private void tile_2_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_2_2ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_2_2,2,2);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_2_2ActionPerformed
     private void tile_2_3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_2_3ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_2_3,2,3);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_2_3ActionPerformed
     private void tile_2_4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_2_4ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_2_4,2,4);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_2_4ActionPerformed
     private void tile_2_5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_2_5ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_2_5,2,5);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_2_5ActionPerformed
     private void tile_2_6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_2_6ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_2_6,2,6);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_2_6ActionPerformed
     private void tile_2_7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_2_7ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_2_7,2,7);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_2_7ActionPerformed
 
     private void tile_3_0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_3_0ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_3_0,3,0);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_3_0ActionPerformed
     private void tile_3_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_3_1ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_3_1,3,1);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_3_1ActionPerformed
     private void tile_3_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_3_2ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_3_2,3,2);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_3_2ActionPerformed
     private void tile_3_3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_3_3ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_3_3,3,3);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_3_3ActionPerformed
     private void tile_3_4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_3_4ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_3_4,3,4);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_3_4ActionPerformed
     private void tile_3_5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_3_5ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_3_5,3,5);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_3_5ActionPerformed
     private void tile_3_6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_3_6ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_3_6,3,6);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_3_6ActionPerformed
     private void tile_3_7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_3_7ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_3_7,3,7);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_3_7ActionPerformed
 
     private void tile_4_0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_4_0ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_4_0,4,0);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_4_0ActionPerformed
     private void tile_4_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_4_1ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_4_1,4,1);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_4_1ActionPerformed
     private void tile_4_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_4_2ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_4_2,4,2);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_4_2ActionPerformed
     private void tile_4_3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_4_3ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_4_3,4,3);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_4_3ActionPerformed
     private void tile_4_4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_4_4ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_4_4,4,4);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_4_4ActionPerformed
     private void tile_4_5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_4_5ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_4_5,4,5);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_4_5ActionPerformed
     private void tile_4_6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_4_6ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_4_6,4,6);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_4_6ActionPerformed
     private void tile_4_7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_4_7ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_4_7,4,7);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_4_7ActionPerformed
     
     private void tile_5_0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_5_0ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_5_0,5,0);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_5_0ActionPerformed
     private void tile_5_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_5_1ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_5_1,5,1);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_5_1ActionPerformed
     private void tile_5_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_5_2ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_5_2,5,2);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_5_2ActionPerformed
     private void tile_5_3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_5_3ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_5_3,5,3);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_5_3ActionPerformed
     private void tile_5_4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_5_4ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_5_4,5,4);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_5_4ActionPerformed
     private void tile_5_5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_5_5ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_5_5,5,5);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_5_5ActionPerformed
     private void tile_5_6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_5_6ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_5_6,5,6);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_5_6ActionPerformed
     private void tile_5_7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_5_7ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_5_7,5,7);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_5_7ActionPerformed
 
     private void tile_6_0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_6_0ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_6_0,6,0);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_6_0ActionPerformed
     private void tile_6_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_6_1ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_6_1,6,1);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_6_1ActionPerformed
     private void tile_6_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_6_2ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_6_2,6,2);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_6_2ActionPerformed
     private void tile_6_3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_6_3ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_6_3,6,3);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_6_3ActionPerformed
     private void tile_6_4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_6_4ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_6_4,6,4);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_6_4ActionPerformed
     private void tile_6_5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_6_5ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_6_5,6,5);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_6_5ActionPerformed
     private void tile_6_6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_6_6ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_6_6,6,6);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_6_6ActionPerformed
     private void tile_6_7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_6_7ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_6_7,6,7);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_6_7ActionPerformed
 
     private void tile_7_0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_7_0ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_7_0,7,0);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_7_0ActionPerformed
     private void tile_7_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_7_1ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_7_1,7,1);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_7_1ActionPerformed
     private void tile_7_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_7_2ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_7_2,7,2);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_7_2ActionPerformed
     private void tile_7_3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_7_3ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_7_3,7,3);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_7_3ActionPerformed
     private void tile_7_4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_7_4ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_7_4,7,4);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_7_4ActionPerformed
     private void tile_7_5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_7_5ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_7_5,7,5);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_7_5ActionPerformed
     private void tile_7_6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_7_6ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_7_6,7,6);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_7_6ActionPerformed
     private void tile_7_7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tile_7_7ActionPerformed
         // TODO add your handling code here:
         updateTile(tile_7_7,7,7);
-        testArrayBoard();
+        
     }//GEN-LAST:event_tile_7_7ActionPerformed
     
     /**
@@ -1389,6 +1389,7 @@ public class ReversiBoard extends javax.swing.JFrame {
     
     //method for all action listeners - updates board and makes move
     public void updateTile(JButton tile, int x, int y) {
+        arrayBoard = makeReverseBoard(arrayBoard);
         ArrayList<int[]> legalMoves = returnMoves(arrayBoard);
         int [] compareArray = new int[2];
         int xPos = 0; int yPos = 0;
@@ -1398,12 +1399,15 @@ public class ReversiBoard extends javax.swing.JFrame {
             xPos = compareArray[0];
             yPos = compareArray[1];
             if ((x == xPos) && y == yPos) {
-                //tile.setForeground(Color.BLACK); //reverse, will actually play white
                 arrayBoard[x][y] = 2;
-
+                testBoard(arrayBoard);
                 //flips captured pieces for player's move
                 flipTiles(compareArray,2);
-                updateScores();  //updates score on GUI
+                testBoard(arrayBoard);
+                //reverses board to account for previous reverse
+                arrayBoard = makeReverseBoard(arrayBoard);
+                testBoard(arrayBoard);
+
                 //updates the JButton array to match that of the arrayBoard
                 boardList = storeFromArrayBoard(arrayBoard);
                 //resets legalmove indicator
@@ -1429,15 +1433,16 @@ public class ReversiBoard extends javax.swing.JFrame {
                 });
                 timer.setRepeats(false);
                 timer.start();
+                break;
             }
         }
     }
     //prints arrayboard
-    public void testArrayBoard() {
+    public void testBoard(int[][] board) {
         System.out.println("==========");
         for (int i = 0; i < 8; i++) {
         for (int k = 0; k < 8; k++) {
-        System.out.print(arrayBoard[i][k]);
+        System.out.print(board[i][k]);
         }
         System.out.println();
         }
@@ -1466,7 +1471,6 @@ public class ReversiBoard extends javax.swing.JFrame {
         if (x == 7 && y == 7) {
             arrayBoard[x][y] = 2;
         }
-        //testArrayBoard();
         
         if (!checkWin(arrayBoard)) {
             if (x != -1) {
@@ -1709,16 +1713,7 @@ public class ReversiBoard extends javax.swing.JFrame {
         //updates GUI to show legal moves
         showLegal(legalMoves, boardList);
     }
-    //testing method
-    public void setBlack() {
-        for (int i = 0; i < 8; i++) {
-            for (int k = 0; k < 8; k++) {
-                boardList[i][k].setBackground(Color.BLACK);
-            }
-        }
-        updateBoard(boardList);
-    }
-    
+   
     public static void main(String args[]) throws InterruptedException {
         //GUI Setup
         ReversiBoard guiBoard = new ReversiBoard();
@@ -1742,9 +1737,9 @@ public class ReversiBoard extends javax.swing.JFrame {
         ArrayList<int[]> legalMoves = new ArrayList<>();
         
         //first turn display
-        //int[][] reverseBoard = guiBoard.makeReverseBoard(arrayBoard);
+        int[][] reverseBoard = guiBoard.makeReverseBoard(arrayBoard);
         //gets all legal moves for user
-        legalMoves = guiBoard.returnMoves(arrayBoard);
+        legalMoves = guiBoard.returnMoves(reverseBoard);
         //updates GUI to show legal moves
         guiBoard.showLegal(legalMoves, boardList);
         
@@ -1790,26 +1785,26 @@ public class ReversiBoard extends javax.swing.JFrame {
     
     public void play() {
         ArrayList<int[]> legalMoves = new ArrayList<>();
-        
         int[][] reverseBoard = makeBoardCopy(arrayBoard);
         var aiMoveChoice = new int[2];
         int aiMoveX; int aiMoveY;
-
+        
         if(!checkWin(arrayBoard) && aiCanMove) {
             //swaps player
-            reverseBoard = makeReverseBoard(reverseBoard);
+            //reverseBoard = makeReverseBoard(reverseBoard);
 
             //AI chooses a move: smartTurn
             //aiMoveChoice = smartTurn(reverseBoard,0,1);         
             //AI chooses a move: smartTurn with capture
-            aiMoveChoice = smartTurnCapture(reverseBoard,0,1).get(0);
+            aiMoveChoice = smartTurnCapture(reverseBoard,0,2).get(0);
+            
             aiMoveX = aiMoveChoice[0];
             aiMoveY = aiMoveChoice[1];
             if (aiMoveX != -1) { //AI has a legal move available 
-                
+                testBoard(arrayBoard);
                 //updates move choice on arrayBoard
-                reverseBoard[aiMoveX][aiMoveY] = 2;
-
+                arrayBoard[aiMoveX][aiMoveY] = 2;
+                testBoard(arrayBoard);
                 //testing only - places marker on ai-chosen move
                 boardList[aiMoveX][aiMoveY].setBackground(Color.RED);
                 
@@ -1817,9 +1812,9 @@ public class ReversiBoard extends javax.swing.JFrame {
                 boardList[aiMoveX][aiMoveY].setForeground(Color.WHITE);
                 
                 //swaps board again to account for previous reverse
-                arrayBoard = makeReverseBoard(reverseBoard);
+                //arrayBoard = makeReverseBoard(reverseBoard);
                 //update board with AI's captured picees
-                flipTiles(aiMoveChoice,1);
+                flipTiles(aiMoveChoice,2);
                 //updates the JButton array to match that of the arrayBoard
                 boardList = storeFromArrayBoard(arrayBoard);
                 //updates the GUI based on new boardList
@@ -1829,7 +1824,8 @@ public class ReversiBoard extends javax.swing.JFrame {
 
                 //set up for next user turn
                 //gets all legal moves for user
-                legalMoves = returnMoves(arrayBoard);
+                reverseBoard = makeReverseBoard(arrayBoard);
+                legalMoves = returnMoves(reverseBoard);
                 if (!legalMoves.isEmpty()) { //user has legal moves available 
                     //updates GUI to show legal moves
                     showLegal(legalMoves, boardList);
@@ -1845,13 +1841,14 @@ public class ReversiBoard extends javax.swing.JFrame {
             }
             else { //no legal moves left for AI
                 //swaps board again to account for previous reverse
-                arrayBoard = makeReverseBoard(reverseBoard);
+                //arrayBoard = makeReverseBoard(reverseBoard);
                 //updates the GUI based on new boardList
                 updateBoard(boardList);
                     
                 //set up for next user turn
                 //gets all legal moves for user
-                legalMoves = returnMoves(arrayBoard);
+                reverseBoard = makeReverseBoard(arrayBoard);
+                legalMoves = returnMoves(reverseBoard);
                 //updates GUI to show legal moves
                 showLegal(legalMoves, boardList);
                 //swaps bold font to Player, indicating User's turn
@@ -2279,18 +2276,19 @@ public class ReversiBoard extends javax.swing.JFrame {
         int[] tempMove = new int[2];
         int x; int y;
         while (i < available.size()) {
-            tempMove = available.get(i);
-            x = tempMove[0];
-            y = tempMove[1];
-            if (arrayBoard[x][y] != 0) {
-                available.remove(i);
-            }
-            else {
-                i++;
-            }
+        tempMove = available.get(i);
+        x = tempMove[0];
+        y = tempMove[1];
+        if (arrayBoard[x][y] != 0) {
+        available.remove(i);
+        }
+        else {
+        i++;
+        }
         }
         return available;
     }
+   
    
     //pointValue for a specific move. Testable
     public int pointValue(int[] move) { //returns best move for a given board of ints. For example,it might return 
@@ -2342,8 +2340,10 @@ public class ReversiBoard extends javax.swing.JFrame {
             int bestval = -998;
             for (int[] myMove : movelist) {
                 int[][] COPY = makeBoardCopy(board);
-                makeReverseBoard(COPY);
+                COPY = makeReverseBoard(COPY);
+                testBoard(COPY);
                 makeMove(COPY, 2, myMove);
+                testBoard(COPY);
                 if (checkWin(COPY)==true) {
                     return -1000;
                 }
@@ -2404,9 +2404,10 @@ public class ReversiBoard extends javax.swing.JFrame {
     
     public ArrayList<int[]> smartTurnCapture(int[][] board, int level, int token) {
 
-
+        
         ArrayList<int[]> moveList = returnMoves(board);
         ArrayList<int[]> bestMoves = new ArrayList<>();
+        
         
         int bestval = -1001;
         int[] bestmove = new int[2];
@@ -2464,6 +2465,7 @@ public class ReversiBoard extends javax.swing.JFrame {
                     mostCaptureMove.clear();
                     mostCaptureMove.add(chosenMove);
                 }
+                arrayBoard = board;
                 return mostCaptureMove;
             }
         }
