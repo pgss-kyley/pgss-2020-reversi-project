@@ -2158,7 +2158,7 @@ public class ReversiBoard extends javax.swing.JFrame {
 	//0 = empty, 1= black, 2=white
 
 	//this perspective is that I'm the white tile, looking to flip a black tile
-		if (sum==-2) { 
+		if (sum==2) { 
 	        while (bx<7 && by<7) {
 	            bx++;
 	            by++;
@@ -2168,7 +2168,7 @@ public class ReversiBoard extends javax.swing.JFrame {
 			}
 		}
 
-		else if (sum==2) {
+		else if (sum==-2) {
 	            while (0<bx && 0<by) {
 	                bx--;
 	                by--;
